@@ -16,19 +16,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_weight="1">
 
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/cameraLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.6"
-            android:orientation="vertical">
-
+            android:layout_weight="0.6">
+            <!-- OVDJE NEKA SE NALAZI USLIKANA SLIKA -->
             <SurfaceView
                 android:id="@+id/surfaceView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-        </LinearLayout>
+        </FrameLayout>
 
         <LinearLayout
             android:id="@+id/bottomLayout"
