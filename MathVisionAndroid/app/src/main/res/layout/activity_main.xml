@@ -38,14 +38,14 @@
             android:layout_weight="0.8"
             android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/buttonTakePicture"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="30dp"
-                    android:onClick="clickTakePicture"
-                    android:text="Take picture"
-                    android:visibility="visible" />
+            <Button
+                android:id="@+id/buttonTakePicture"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="30dp"
+                android:onClick="clickTakePicture"
+                android:text="Take picture"
+                android:visibility="visible" />
 
         </LinearLayout>
 
