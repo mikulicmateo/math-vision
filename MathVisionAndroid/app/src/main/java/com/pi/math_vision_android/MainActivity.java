@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
         cameraLayout =(FrameLayout) findViewById(R.id.cameraLayout);
 
@@ -91,9 +92,13 @@ public class MainActivity extends AppCompatActivity {
 
     // This method calls when button "Take picture" is clicked
     public void clickTakePicture(View view) {
-        if(camera != null){
+       /* if(camera != null){
             camera.takePicture(null,null,mPictureCallback);
-        }
+        } */
+
+        // This is for opening ConfirmActivity
+        Intent intent = new Intent(MainActivity.this, ConfirmActivity.class);
+        startActivity(intent);
     }
 
 }

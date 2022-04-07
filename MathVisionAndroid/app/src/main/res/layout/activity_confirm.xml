@@ -20,7 +20,7 @@
             android:id="@+id/cameraLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.6">
+            android:layout_weight="0.3">
             <!-- OVDJE NEKA SE NALAZI USLIKANA SLIKA -->
             <SurfaceView
                 android:id="@+id/surfaceView"
@@ -33,10 +33,53 @@
             android:id="@+id/bottomLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.4"
+            android:layout_weight="0.7"
             android:orientation="vertical">
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_weight="0.5"
+                >
+
+                <TextView
+                    android:id="@+id/textViewFormula"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textSize="20sp"
+                    android:text="Is this correct formula?\nHere comes formula!" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:orientation="horizontal">
+
+
+                    <Button
+                        android:id="@+id/buttonRetry"
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="15dp"
+                        android:layout_weight="1"
+                        android:onClick="clickRetry"
+                        android:text="Retry" />
+
+                    <Button
+                        android:id="@+id/buttonConfirm"
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="15dp"
+                        android:layout_weight="1"
+                        android:text="Confirm" />
+
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
