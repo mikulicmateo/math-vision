@@ -24,10 +24,10 @@
             android:layout_height="match_parent"
             android:layout_weight="0.2">
 
-            <SurfaceView
-                android:id="@+id/surfaceView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+            <TextureView
+            android:id="@+id/textureView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         </FrameLayout>
 
@@ -43,7 +43,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="30dp"
-                android:onClick="clickTakePicture"
                 android:text="Take picture"
                 android:visibility="visible" />
 
