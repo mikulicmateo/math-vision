@@ -1,5 +1,6 @@
 package com.pi.math_vision_android;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -22,7 +23,6 @@ public class Racunanje {
             return "Syntax error";
         }
         catch (MathException e){
-            Log.e("err",e.getMessage());
             return "Math Error";
         }
 
