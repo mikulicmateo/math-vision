@@ -43,6 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="30dp"
+                android:onClick="btnSlikaj"
                 android:text="Take picture"
                 android:visibility="visible" />
 

@@ -3,10 +3,13 @@ package com.pi.math_vision_android;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.bluetooth.le.AdvertiseSettings;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Environment;
 import android.view.View;
 
@@ -52,6 +55,10 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import android.os.Environment;
+import android.content.Intent;
+import android.provider.Settings;
+import android.net.Uri;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -107,6 +114,29 @@ public class MainActivity extends AppCompatActivity {
         this.getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
 
+        ActivityCompat.requestPermissions(
+                this,
+                new String[]{
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.MANAGE_EXTERNAL_STORAGE
+                },
+                1
+        );
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if(Environment.isExternalStorageManager()){
+
+            // If you don't have access, launch a new activity to show the user the system's dialog
+            // to allow access to the external storage
+            }else{
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                Uri uri = Uri.fromParts("package", this.getPackageName(), null);
+                intent.setData(uri);
+                startActivity(intent);
+            }
+        }
+
         textureView = (TextureView)findViewById(R.id.textureView);
         //From Java 1.4 , you can use keyword 'assert' to check expression true or false
         assert textureView != null;
@@ -117,13 +147,23 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 takePicture();
 
-                /*
-                // This is for opening ConfirmActivity
-                Intent intent = new Intent(MainActivity.this, ConfirmActivity.class);
-                startActivity(intent);
+                new CountDownTimer(300, 30) {
+                    public void onFinish() {
+                        // When timer is finished
+                        // Execute your code here
 
-                 */
+                        // This is for opening ConfirmActivity
+                        Intent intent = new Intent(MainActivity.this, ConfirmActivity.class);
+                        startActivity(intent);
+                    }
+
+                    public void onTick(long millisUntilFinished) {
+                        // millisUntilFinished    The amount of time until finished.
+                    }
+                }.start();
+
             }
+
         });
 
     }
@@ -202,6 +242,7 @@ public class MainActivity extends AppCompatActivity {
                             outputStream.close();
                     }
                 }
+
             };
 
             reader.setOnImageAvailableListener(readerListener,mBackgroundHandler);
