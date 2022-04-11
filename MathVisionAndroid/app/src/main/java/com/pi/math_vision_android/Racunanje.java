@@ -21,7 +21,7 @@ public class Racunanje {
         EvalUtilities util = new EvalUtilities(false,true);
         try{
             IExpr result = util.evaluate(s);
-            return"$$"+ stringToJqmath(result.toString())+"$$</br>"+"testing string";
+            return"$$"+ stringToJqmath(result.toString())+"$$</br>";
         }
         catch (SyntaxError e){
             Log.e("err",e.getMessage());
