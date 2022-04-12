@@ -19,7 +19,7 @@ def preprocess_img(img):
         contours_poly[i] = cv.approxPolyDP(c, 2, True)
         bound_rect[i] = cv.boundingRect(contours_poly[i])
 
-    if len(bound_rect) > 0:
+    if len(bound_rect) < 1:
         return None
     return_val = resize_img(canny, bound_rect[0])
     return return_val
