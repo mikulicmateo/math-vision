@@ -3,8 +3,14 @@ package com.pi.math_vision_android;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class ConfirmActivity extends AppCompatActivity {
 
@@ -13,6 +19,21 @@ public class ConfirmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.getSupportActionBar().hide();
         setContentView(R.layout.activity_confirm);
+        TextView textView = findViewById(R.id.textViewFormula);
+        ImageView showImage = findViewById(R.id.imageView);
+
+    try {
+        Bundle extras = getIntent().getExtras();
+        String imagePath = extras.getString("ImagePath");
+        textView.append(imagePath);
+
+        Bitmap myBitmap = BitmapFactory.decodeFile(imagePath);
+        showImage.setImageBitmap(myBitmap);
+    }
+    catch (Exception e) {
+        textView.append(e.toString());
+    }
+
     }
 
     public void clickRetry(View view)

@@ -135,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
         assert textureView != null;
         textureView.setSurfaceTextureListener(textureListener);
 
+        // On click Take picture and start new activity
         btnCapture = findViewById(R.id.buttonTakePicture);
         btnCapture.setOnClickListener(view -> {
             takePicture();
@@ -145,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
                     // When timer is finished
                     // This is for opening ConfirmActivity
                     Intent intent = new Intent(MainActivity.this, ConfirmActivity.class);
+                    intent.putExtra("ImagePath", file.toString());
                     startActivity(intent);
                 }
 
