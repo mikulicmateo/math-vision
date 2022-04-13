@@ -1,9 +1,10 @@
 package com.pi.math_vision_android;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.bluetooth.le.AdvertiseSettings;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,14 +12,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
-import android.view.View;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
-
 
 import android.Manifest;
 import android.graphics.ImageFormat;
@@ -51,19 +48,18 @@ import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
-import android.os.Environment;
-import android.content.Intent;
+import java.util.Objects;
+
 import android.provider.Settings;
 import android.net.Uri;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnCapture;
-    private TextureView textureView;
+    Button btnCapture;
+    TextureView textureView;
 
     //Check state orientation of output image
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
@@ -74,17 +70,14 @@ public class MainActivity extends AppCompatActivity {
         ORIENTATIONS.append(Surface.ROTATION_270,180);
     }
 
-    private String cameraId;
     private CameraDevice cameraDevice;
     private CameraCaptureSession cameraCaptureSessions;
     private CaptureRequest.Builder captureRequestBuilder;
     private Size imageDimension;
-    private ImageReader imageReader;
 
     //Save to FILE
     private File file;
     private static final int REQUEST_CAMERA_PERMISSION = 200;
-    private boolean mFlashSupported;
     private Handler mBackgroundHandler;
     private HandlerThread mBackgroundThread;
 
@@ -103,29 +96,30 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onError(@NonNull CameraDevice cameraDevice, int i) {
             cameraDevice.close();
-            cameraDevice=null;
         }
     };
 
-
+    @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
         setContentView(R.layout.activity_main);
 
+        //Asking users for permission to use storage
         ActivityCompat.requestPermissions(
                 this,
                 new String[]{
                         Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.MANAGE_EXTERNAL_STORAGE
+                        Manifest.permission.MANAGE_EXTERNAL_STORAGE,
+                        Manifest.permission.CAMERA
                 },
                 1
         );
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             if(Environment.isExternalStorageManager()){
-
+                assert true;
             // If you don't have access, launch a new activity to show the user the system's dialog
             // to allow access to the external storage
             }else{
@@ -137,35 +131,28 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        textureView = (TextureView)findViewById(R.id.textureView);
-        //From Java 1.4 , you can use keyword 'assert' to check expression true or false
+        textureView = findViewById(R.id.textureView);
         assert textureView != null;
         textureView.setSurfaceTextureListener(textureListener);
-        btnCapture = (Button)findViewById(R.id.buttonTakePicture);
-        btnCapture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                takePicture();
 
-                new CountDownTimer(300, 30) {
-                    public void onFinish() {
-                        // When timer is finished
-                        // Execute your code here
+        btnCapture = findViewById(R.id.buttonTakePicture);
+        btnCapture.setOnClickListener(view -> {
+            takePicture();
 
-                        // This is for opening ConfirmActivity
-                        Intent intent = new Intent(MainActivity.this, ConfirmActivity.class);
-                        startActivity(intent);
-                    }
+            //Timer for delaying opening new activity
+            new CountDownTimer(500, 50) {
+                public void onFinish() {
+                    // When timer is finished
+                    // This is for opening ConfirmActivity
+                    Intent intent = new Intent(MainActivity.this, ConfirmActivity.class);
+                    startActivity(intent);
+                }
 
-                    public void onTick(long millisUntilFinished) {
-                        // millisUntilFinished    The amount of time until finished.
-                    }
-                }.start();
-
-            }
-
+                public void onTick(long millisUntilFinished) {
+                    // millisUntilFinished The amount of time until finished.
+                }
+            }.start();
         });
-
     }
 
 
@@ -201,9 +188,20 @@ public class MainActivity extends AppCompatActivity {
             int rotation = getWindowManager().getDefaultDisplay().getRotation();
             captureBuilder.set(CaptureRequest.JPEG_ORIENTATION,ORIENTATIONS.get(rotation));
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
+
+            @SuppressLint("SimpleDateFormat")
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
             String date = dateFormat.format(new Date());
-            file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+ File.separator + "Picture_" + date + ".jpg");
+
+            //Making Math-vision folder in pictures
+            String folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + File.separator + "Math-Vision";
+            File directory = new File(folder);
+            if(!directory.exists()){
+                directory.mkdir();
+            }
+
+            //path where pictures will be stored
+            file = new File(folder + File.separator + "Picture_" + date + ".jpg");
 
             ImageReader.OnImageAvailableListener readerListener = new ImageReader.OnImageAvailableListener() {
                 @Override
@@ -216,16 +214,10 @@ public class MainActivity extends AppCompatActivity {
                         buffer.get(bytes);
                         save(bytes);
 
-                    }
-                    catch (FileNotFoundException e)
+                    } catch (IOException e)
                     {
                         e.printStackTrace();
-                    }
-                    catch (IOException e)
-                    {
-                        e.printStackTrace();
-                    }
-                    finally {
+                    } finally {
                         {
                             if(image != null)
                                 image.close();
@@ -233,13 +225,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 private void save(byte[] bytes) throws IOException {
-                    OutputStream outputStream = null;
-                    try{
-                        outputStream = new FileOutputStream(file);
+                    try (OutputStream outputStream = new FileOutputStream(file)) {
                         outputStream.write(bytes);
-                    }finally {
-                        if(outputStream != null)
-                            outputStream.close();
                     }
                 }
 
@@ -277,6 +264,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //function for showing camera view
     private void createCameraPreview() {
         try{
             SurfaceTexture texture = textureView.getSurfaceTexture();
@@ -285,7 +273,7 @@ public class MainActivity extends AppCompatActivity {
             Surface surface = new Surface(texture);
             captureRequestBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
             captureRequestBuilder.addTarget(surface);
-            cameraDevice.createCaptureSession(Arrays.asList(surface), new CameraCaptureSession.StateCallback() {
+            cameraDevice.createCaptureSession(Collections.singletonList(surface), new CameraCaptureSession.StateCallback() {
                 @Override
                 public void onConfigured(@NonNull CameraCaptureSession cameraCaptureSession) {
                     if(cameraDevice == null)
@@ -318,6 +306,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void openCamera() {
         CameraManager manager = (CameraManager)getSystemService(Context.CAMERA_SERVICE);
+        String cameraId;
         try{
             cameraId = manager.getCameraIdList()[0];
             CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraId);
