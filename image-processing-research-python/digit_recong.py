@@ -11,13 +11,14 @@ gray = cv.cvtColor(numbers_img, cv.COLOR_BGR2GRAY)
 cv.imshow('gray numbers', gray)
 
 blur = cv.medianBlur(gray, 5)
-canny = cv.Canny(blur, 125, 250, cv.THRESH_BINARY)
+#canny = cv.Canny(blur, 125, 250, cv.THRESH_BINARY)
+_, canny = cv.threshold(blur, 125, 250, cv.THRESH_BINARY_INV)
 
 cv.imshow('canny', canny)
 
 # rect_kernel dimensions and number of iterations subject to change
-rect_kernel = cv.getStructuringElement(cv.MORPH_RECT, (2, 2))
-canny = cv.dilate(canny, rect_kernel, iterations = 1)
+rect_kernel = cv.getStructuringElement(cv.MORPH_RECT, (3, 3))
+canny = cv.dilate(canny, rect_kernel, iterations = 3)
 
 contours, hierarchies = cv.findContours(canny, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
 cv.drawContours(numbers_img, contours, -1, (255, 0, 0), 2)
@@ -48,6 +49,7 @@ for rect in bound_rect:
     ax, ay = 50 - (image_to_resize.shape[1] // 2), 50 - (image_to_resize.shape[0] // 2)
     # write resized image to middle of the blank image
     blank[ay: ay + image_to_resize.shape[0], ax: ax + image_to_resize.shape[1]] = image_to_resize
+    blank = np.invert(blank)
     cv.imshow('win' + str(counter), blank)
     cv.imwrite(image_save_file_path + str(counter) + '.jpg', blank)
 
