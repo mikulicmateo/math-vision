@@ -25,7 +25,6 @@ public class ConfirmActivity extends AppCompatActivity {
     try {
         Bundle extras = getIntent().getExtras();
         String imagePath = extras.getString("ImagePath");
-        textView.append(imagePath);
 
         Bitmap myBitmap = BitmapFactory.decodeFile(imagePath);
         ImageManipulation manip = new ImageManipulation();
