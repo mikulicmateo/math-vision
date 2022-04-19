@@ -33,17 +33,7 @@ public class ConfirmActivity extends AppCompatActivity {
         showImage.setImageBitmap(test);
     }
     catch(NullPointerException e){
-        new CountDownTimer(500, 50) {
-            public void onFinish() {
-                // When timer is finished
-                // This is for opening ConfirmActivity
                 onCreate(savedInstanceState);
-            }
-
-            public void onTick(long millisUntilFinished) {
-                // millisUntilFinished The amount of time until finished.
-            }
-        }.start();
     }
     catch (Exception e) {
         textView.append(e.toString());
