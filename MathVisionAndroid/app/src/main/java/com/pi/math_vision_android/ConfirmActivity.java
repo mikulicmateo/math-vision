@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +31,19 @@ public class ConfirmActivity extends AppCompatActivity {
         ImageManipulation manip = new ImageManipulation();
         Bitmap test = manip.resizeImage(myBitmap);
         showImage.setImageBitmap(test);
+    }
+    catch(NullPointerException e){
+        new CountDownTimer(500, 50) {
+            public void onFinish() {
+                // When timer is finished
+                // This is for opening ConfirmActivity
+                onCreate(savedInstanceState);
+            }
+
+            public void onTick(long millisUntilFinished) {
+                // millisUntilFinished The amount of time until finished.
+            }
+        }.start();
     }
     catch (Exception e) {
         textView.append(e.toString());
