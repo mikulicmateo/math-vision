@@ -33,11 +33,11 @@ public class Racunanje {
 
     }
     public String stringToJqmath(String solution)  {
+        //pretvaranje sintakse od SymJA-e  u sintaksu od JQmatha
         String prvaZamjena=solution.replaceAll("Sqrt","√");
         String DrugaZamjena=prvaZamjena.replaceAll("Pow","^");
         String trecaZamjena=DrugaZamjena.replaceAll("\\{", "" );
         String Cetvrtazamjena=trecaZamjena.replaceAll("\\}", "" );
-
         return Cetvrtazamjena.replaceAll(",","\\$\\$\\$\\$");
 
     }
