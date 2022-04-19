@@ -14,6 +14,7 @@
     android:layout_height="match_parent">
 
 
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -23,14 +24,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_weight="1">
+        app:layout_constraintVertical_weight="1"
+        android:background="@color/blackTransparent">
+
 
         <FrameLayout
             android:id="@+id/cameraLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.2"
-            android:background="@color/blackTransparent"
+
 
             >
 
@@ -62,6 +65,7 @@
 
     </LinearLayout>
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/mutno"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -85,6 +89,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.35" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/endlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/EndY"
         android:layout_width="wrap_content"
@@ -96,11 +107,60 @@
         android:layout_width="0dp"
         android:layout_height="0sp"
         android:layout_gravity="center"
-        android:background="@color/whiteTransparent"
         app:layout_constraintEnd_toStartOf="@+id/EndX"
         app:layout_constraintTop_toBottomOf="@+id/StartY"
         app:layout_constraintBottom_toBottomOf="@id/EndY"
         app:layout_constraintStart_toEndOf="@+id/StartX" />
+
+    <TextView
+        android:id="@+id/lft"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:background="@color/blackTransparent"
+
+        app:layout_constraintEnd_toEndOf="@id/StartX"
+        app:layout_constraintStart_toStartOf="@id/mutno"
+        app:layout_constraintTop_toTopOf="@id/mutno"
+        app:layout_constraintBottom_toTopOf="@id/endlay"/>
+
+    <TextView
+        android:id="@+id/rite"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:background="@color/blackTransparent"
+
+        app:layout_constraintEnd_toEndOf="@id/mutno"
+        app:layout_constraintStart_toStartOf="@id/EndX"
+        app:layout_constraintTop_toTopOf="@id/mutno"
+        app:layout_constraintBottom_toTopOf="@id/endlay"/>
+
+    <TextView
+        android:id="@+id/topic"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:background="@color/blackTransparent"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/rite"
+        app:layout_constraintStart_toEndOf="@id/EndX"
+        app:layout_constraintStart_toStartOf="@id/StartX"
+app:layout_constraintBottom_toTopOf="@id/endlay"
+        app:layout_constraintTop_toTopOf="@id/EndY"/>
+    <TextView
+        android:id="@+id/botic"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:background="@color/blackTransparent"
+
+        app:layout_constraintStart_toStartOf="@id/StartX"
+        app:layout_constraintEnd_toEndOf="@id/EndX"
+        app:layout_constraintTop_toTopOf="@id/mutno"
+        app:layout_constraintBottom_toBottomOf="@id/StartY"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
 
