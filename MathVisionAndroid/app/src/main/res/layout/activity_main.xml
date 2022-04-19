@@ -30,6 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.2"
+            android:background="@color/blackTransparent"
 
             >
 
@@ -63,25 +64,27 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/StartX"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.10" />
+        app:layout_constraintGuide_percent="0.05" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/EndX"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.90" />
+        app:layout_constraintGuide_percent="0.95" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/StartY"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.40" />
+        app:layout_constraintGuide_percent="0.35" />
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/EndY"
         android:layout_width="wrap_content"
@@ -93,7 +96,7 @@
         android:layout_width="0dp"
         android:layout_height="0sp"
         android:layout_gravity="center"
-        android:background="@color/blackTransparent"
+        android:background="@color/whiteTransparent"
         app:layout_constraintEnd_toStartOf="@+id/EndX"
         app:layout_constraintTop_toBottomOf="@+id/StartY"
         app:layout_constraintBottom_toBottomOf="@id/EndY"

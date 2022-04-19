@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
             String date = dateFormat.format(new Date());
 
             //Making Math-vision folder in pictures
-            String folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + File.separator + "Math-Vision";
+            String folder = Environment.getExternalStoragePublicDirectory("") + File.separator + "Math-Vision";
             File directory = new File(folder);
             if(!directory.exists()){
                 directory.mkdir();
