@@ -3,11 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/andro/math-vision/MathVisionAndroid/app/src/main/res/layout/activity_confirm.xml" value="0.16259057971014493" />
-        <entry key="..\:/andro/math-vision/MathVisionAndroid/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/andro/math-vision/MathVisionAndroid/app/src/main/res/layout/jednadzba_activity.xml" value="0.18802083333333333" />
-        <entry key="..\:/andro/math-vision/MathVisionAndroid/app/src/main/res/layout/jednadzba_layout.xml" value="0.1" />
-        <entry key="..\:/andro/math-vision/MathVisionAndroid/app/src/main/res/layout/layout_jednadzba.xml" value="0.16" />
+        <entry key="..\:/PROJEKT-PI/math-vision/MathVisionAndroid/app/src/main/res/layout/activity_confirm.xml" value="0.2" />
+        <entry key="..\:/PROJEKT-PI/math-vision/MathVisionAndroid/app/src/main/res/layout/activity_main.xml" value="0.19635416666666666" />
+        <entry key="..\:/ProjektPI/math-vision/MathVisionAndroid/app/src/main/res/layout/activity_confirm.xml" value="0.25416666666666665" />
+        <entry key="..\:/ProjektPI/math-vision/MathVisionAndroid/app/src/main/res/layout/activity_main.xml" value="0.264" />
       </map>
     </option>
   </component>
