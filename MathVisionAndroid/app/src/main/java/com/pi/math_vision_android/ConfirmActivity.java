@@ -28,7 +28,9 @@ public class ConfirmActivity extends AppCompatActivity {
         textView.append(imagePath);
 
         Bitmap myBitmap = BitmapFactory.decodeFile(imagePath);
-        showImage.setImageBitmap(myBitmap);
+        ImageManipulation manip = new ImageManipulation();
+        Bitmap test = manip.resizeImage(myBitmap);
+        showImage.setImageBitmap(test);
     }
     catch (Exception e) {
         textView.append(e.toString());

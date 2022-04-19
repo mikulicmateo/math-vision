@@ -2,15 +2,25 @@ package com.pi.math_vision_android;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.util.Log;
 
 public class ImageManipulation {
+
+    private static int width;
 
     //cropanje slike newWidth i newHeight u postotcima
     public static Bitmap resizeImage(Bitmap bitmap, float newWidth, float newHeight) {
          int NewWidth= Math.round(bitmap.getWidth()*(newWidth/100));
          int NewHeight=Math.round(bitmap.getHeight()*(newHeight/100));
-        Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, NewWidth, NewHeight, true);
-        return resizedBitmap;
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, NewWidth, NewHeight, true);
+        return scaledBitmap;
+    }
+    public static Bitmap resizeImage(Bitmap bitmap) {
+        //mijenjamo dole mijenjamo lijevo
+        bitmap=rotateImage(bitmap,90);
+        bitmap = Bitmap.createBitmap(bitmap,(int) Math.round(bitmap.getWidth()*0.10),(int)Math.round(bitmap.getHeight()*0.50),
+                (int)Math.round(bitmap.getWidth()*0.80),(int)Math.round(bitmap.getHeight()*0.2));
+        return bitmap;
     }
 
     //rotacija slike za stupnjeve za slucaj da treba rotirat i rezat sliku
