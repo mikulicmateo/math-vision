@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
-
 import org.matheclipse.core.eval.EvalUtilities;
 import org.matheclipse.core.interfaces.IExpr;
 import org.matheclipse.parser.client.SyntaxError;
