@@ -4,7 +4,9 @@ import org.opencv.core.MatOfPoint;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 
-public class Comparator implements java.util.Comparator<MatOfPoint> {
+import java.util.Comparator;
+
+public class MatOfPointComparator implements Comparator<MatOfPoint> {
 
 
     @Override

@@ -14,7 +14,6 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class ImageProcessingUtility {
@@ -75,7 +74,7 @@ public class ImageProcessingUtility {
     }
 
     private List<Rect> getBoundingRectangles(List<MatOfPoint> contours){
-        contours.sort(new Comparator());
+        contours.sort(new MatOfPointComparator());
         List<Rect> boundingRects = new ArrayList<>();
         for (MatOfPoint contour : contours) {
             boundingRects.add(Imgproc.boundingRect(contour));
