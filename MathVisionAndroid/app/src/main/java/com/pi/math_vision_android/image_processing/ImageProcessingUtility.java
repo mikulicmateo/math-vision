@@ -3,37 +3,65 @@ package com.pi.math_vision_android.image_processing;
 import android.graphics.Bitmap;
 
 import org.opencv.android.Utils;
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
+import org.opencv.core.Rect;
 import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ImageProcessingUtility {
 
 
-    public Mat preprocessImage(){
+    public List<Mat> preprocessImage(Bitmap bitmap){
 
-        return null;
+        Mat image = readImage(bitmap);
+        image = augmentImage(image);
+        return getIndividualSymbols(image);
     }
 
     private Mat readImage(Bitmap bitmap){
+        // TODO
         Imgcodecs imageCodecs = new Imgcodecs();
 //        imageCodecs.imread(); // =
         Mat mat = new Mat();
         Utils.bitmapToMat(bitmap, mat);
 
+        return null;
+    }
+
+    private List<Mat> getIndividualSymbols(Mat image) {
+        List<Mat> symbols = new ArrayList<>();
 
         List<MatOfPoint> contours = new ArrayList<>();
         Mat hierarchy = new Mat();
-        Imgproc.findContours(mat, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE); //find contours
+        Imgproc.findContours(image, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE); //find contours
 
+        for (Rect rect : getBoundingRectangles(contours)){
+            Mat imageToResize = new Mat(image, rect);
+            Mat blankImage = Mat.zeros(new Size(100, 100), CvType.CV_8U);
 
-        return null;
+            while (imageToResize.height() > 100 || imageToResize.width() > 100){
+                Imgproc.resize(imageToResize, imageToResize, new Size(0,0), 0.5, 0.5, Imgproc.INTER_AREA);
+            }
+
+            int x = 50 - (imageToResize.width() / 2);
+            int y = 50 - (imageToResize.height() / 2);
+
+            imageToResize.copyTo(blankImage.colRange(x, x + imageToResize.width()).rowRange(y, y + imageToResize.height()));
+
+            Core.bitwise_not(blankImage, blankImage);
+            symbols.add(blankImage);
+        }
+
+        return symbols;
     }
 
     private Mat augmentImage(Mat mat){
@@ -46,8 +74,12 @@ public class ImageProcessingUtility {
         return mat;
     }
 
-
-
-
-
+    private List<Rect> getBoundingRectangles(List<MatOfPoint> contours){
+        contours.sort(new Comparator());
+        List<Rect> boundingRects = new ArrayList<>();
+        for (MatOfPoint contour : contours) {
+            boundingRects.add(Imgproc.boundingRect(contour));
+        }
+        return boundingRects;
+    }
 }
