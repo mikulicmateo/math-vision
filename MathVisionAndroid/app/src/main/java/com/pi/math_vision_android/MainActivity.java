@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Camera;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -55,6 +56,8 @@ import java.util.Objects;
 
 import android.provider.Settings;
 import android.net.Uri;
+
+import helpers.CameraHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -314,37 +317,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void openCamera() {
-        // Function for opening camera
-        CameraManager manager = (CameraManager)getSystemService(Context.CAMERA_SERVICE);
-        String cameraId;
-        try{
-            cameraId = manager.getCameraIdList()[0];
-            CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraId);
-            StreamConfigurationMap map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-            assert map != null;
-            imageDimension = map.getOutputSizes(SurfaceTexture.class)[0];
-            //Check realtime permission if run higher API 23
-            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-            {
-                ActivityCompat.requestPermissions(this,new String[]{
-                        Manifest.permission.CAMERA,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                },REQUEST_CAMERA_PERMISSION);
-                return;
-            }
-            manager.openCamera(cameraId,stateCallback,null);
-
-        } catch (CameraAccessException e) {
-            e.printStackTrace();
-        }
+    private void openCameraAndInitializeImageDimension() {
+        this.imageDimension = CameraHelper.openCamera((CameraManager) getSystemService(Context.CAMERA_SERVICE), this, this, this.stateCallback);
     }
 
     TextureView.SurfaceTextureListener textureListener = new TextureView.SurfaceTextureListener() {
         // Checks textureView and opens camera
         @Override
         public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
-            openCamera();
+         openCameraAndInitializeImageDimension();
         }
 
         @Override
