@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 1
         );
 
+        // Compares build version SDK and user (smartphone) SDK
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             if(Environment.isExternalStorageManager()){
                 assert true;
@@ -159,6 +160,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void takePicture() {
+        // Method called on button click
+        // Create, save and show picture
+
         if(cameraDevice == null)
             return;
         CameraManager manager = (CameraManager)getSystemService(Context.CAMERA_SERVICE);
@@ -196,18 +200,19 @@ public class MainActivity extends AppCompatActivity {
             String date = dateFormat.format(new Date());
 
             //Making Math-vision folder in pictures
-            String folder = Environment.getExternalStoragePublicDirectory("") + File.separator + "Math-Vision";
+            String folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + File.separator + "Math-Vision";
             File directory = new File(folder);
             if(!directory.exists()){
                 directory.mkdir();
             }
 
-            //path where pictures will be stored
+            //Path where pictures will be stored
             file = new File(folder + File.separator + "Picture_" + date + ".jpg");
 
             ImageReader.OnImageAvailableListener readerListener = new ImageReader.OnImageAvailableListener() {
                 @Override
                 public void onImageAvailable(ImageReader imageReader) {
+                    // Saving image bytes
                     Image image = null;
                     try{
                         image = reader.acquireLatestImage();
@@ -227,6 +232,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 private void save(byte[] bytes) throws IOException {
+                    // Saving picture on defined path
                     try (OutputStream outputStream = new FileOutputStream(file)) {
                         outputStream.write(bytes);
                     }
@@ -238,6 +244,7 @@ public class MainActivity extends AppCompatActivity {
             final CameraCaptureSession.CaptureCallback captureListener = new CameraCaptureSession.CaptureCallback() {
                 @Override
                 public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
+                    // Showing location of picture
                     super.onCaptureCompleted(session, request, result);
                     Toast.makeText(MainActivity.this, "Saved: "+file, Toast.LENGTH_SHORT).show();
                     createCameraPreview();
@@ -266,8 +273,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //function for showing camera view
     private void createCameraPreview() {
+        //Function for showing camera view
         try{
             SurfaceTexture texture = textureView.getSurfaceTexture();
             assert  texture != null;
@@ -295,6 +302,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updatePreview() {
+        // Function for getting back to activity and checking camera
         if(cameraDevice == null)
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
         captureRequestBuilder.set(CaptureRequest.CONTROL_MODE,CaptureRequest.CONTROL_MODE_AUTO);
@@ -307,6 +315,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void openCamera() {
+        // Function for opening camera
         CameraManager manager = (CameraManager)getSystemService(Context.CAMERA_SERVICE);
         String cameraId;
         try{
@@ -332,15 +341,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     TextureView.SurfaceTextureListener textureListener = new TextureView.SurfaceTextureListener() {
+        // Checks textureView and opens camera
         @Override
         public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
             openCamera();
         }
 
         @Override
-        public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int i, int i1) {
-
-        }
+        public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int i, int i1) {}
 
         @Override
         public boolean onSurfaceTextureDestroyed(SurfaceTexture surfaceTexture) {
@@ -348,13 +356,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {
-
-        }
+        public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {}
     };
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        // Function which checks if user gave permission for using camera
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CAMERA_PERMISSION) {
             if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
@@ -362,38 +369,5 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        startBackgroundThread();
-        if(textureView.isAvailable())
-            openCamera();
-        else
-            textureView.setSurfaceTextureListener(textureListener);
-    }
-
-    @Override
-    protected void onPause() {
-        stopBackgroundThread();
-        super.onPause();
-    }
-
-    private void stopBackgroundThread() {
-        mBackgroundThread.quitSafely();
-        try{
-            mBackgroundThread.join();
-            mBackgroundThread= null;
-            mBackgroundHandler = null;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void startBackgroundThread() {
-        mBackgroundThread = new HandlerThread("Camera Background");
-        mBackgroundThread.start();
-        mBackgroundHandler = new Handler(mBackgroundThread.getLooper());
     }
 }

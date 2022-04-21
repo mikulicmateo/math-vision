@@ -24,9 +24,11 @@ public class ConfirmActivity extends AppCompatActivity {
         ImageView showImage = findViewById(R.id.imageView);
 
     try {
+        // Getting path of picture
         Bundle extras = getIntent().getExtras();
         String imagePath = extras.getString("ImagePath");
 
+        // Creating image view from path
         Bitmap myBitmap = BitmapFactory.decodeFile(imagePath);
         ImageManipulation manip = new ImageManipulation();
         Bitmap test = manip.resizeImage(myBitmap);
@@ -43,6 +45,7 @@ public class ConfirmActivity extends AppCompatActivity {
 
     public void clickRetry(View view)
     {
+        // Returns to first activity
         Intent intent = new Intent(ConfirmActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
