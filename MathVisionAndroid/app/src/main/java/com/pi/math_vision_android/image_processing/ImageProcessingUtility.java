@@ -10,7 +10,6 @@ import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Size;
-import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
@@ -19,24 +18,20 @@ import java.util.List;
 public class ImageProcessingUtility {
 
 
-    public List<Mat> preprocessImage(Bitmap bitmap){
-
+    public static List<Mat> preprocessImage(Bitmap bitmap){
         Mat image = readImage(bitmap);
         image = augmentImage(image);
         return getIndividualSymbols(image);
     }
 
-    private Mat readImage(Bitmap bitmap){
-        // TODO
-        Imgcodecs imageCodecs = new Imgcodecs();
-//        imageCodecs.imread(); // =
+    private static Mat readImage(Bitmap bitmap){
         Mat mat = new Mat();
         Utils.bitmapToMat(bitmap, mat);
 
-        return null;
+        return mat;
     }
 
-    private List<Mat> getIndividualSymbols(Mat image) {
+    private static List<Mat> getIndividualSymbols(Mat image) {
         List<Mat> symbols = new ArrayList<>();
 
         List<MatOfPoint> contours = new ArrayList<>();
@@ -63,7 +58,7 @@ public class ImageProcessingUtility {
         return symbols;
     }
 
-    private Mat augmentImage(Mat mat){
+    private static Mat augmentImage(Mat mat){
         Imgproc.cvtColor(mat, mat, Imgproc.COLOR_BGR2GRAY); //grayscale
         Imgproc.blur(mat,mat, new Size(5,5));
         Imgproc.threshold(mat, mat, 125, 250, Imgproc.THRESH_BINARY_INV); // thresholding
@@ -73,7 +68,7 @@ public class ImageProcessingUtility {
         return mat;
     }
 
-    private List<Rect> getBoundingRectangles(List<MatOfPoint> contours){
+    private static List<Rect> getBoundingRectangles(List<MatOfPoint> contours){
         contours.sort(new MatOfPointComparator());
         List<Rect> boundingRects = new ArrayList<>();
         for (MatOfPoint contour : contours) {
