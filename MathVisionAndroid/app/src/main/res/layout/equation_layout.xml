@@ -17,7 +17,7 @@
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toTopOf="@+id/btnPonovi"
+        app:layout_constraintBottom_toTopOf="@+id/btnAgain"
         app:layout_constraintEnd_toEndOf="@+id/tableLayout"
         app:layout_constraintStart_toStartOf="@+id/tableLayout"
         app:layout_constraintTop_toTopOf="@+id/tableLayout"
@@ -33,14 +33,14 @@
     </TableRow>
 
     <Button
-        android:id="@+id/btnPonovi"
+        android:id="@+id/btnAgain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:width="270dp"
         android:height="100dp"
         android:insetBottom="10dp"
         android:onClick="again"
-        android:text="@string/ponovo"
+        android:text="@string/Again"
 
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
