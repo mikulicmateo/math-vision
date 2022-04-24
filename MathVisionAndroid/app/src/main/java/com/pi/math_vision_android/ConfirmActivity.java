@@ -23,7 +23,7 @@ public class ConfirmActivity extends AppCompatActivity {
         ImageView showImage = findViewById(R.id.imageView);
 
     try {
-        // Getting path of picture
+        // Getting path of image
         Bundle extras = getIntent().getExtras();
         String imagePath = extras.getString("ImagePath");
 

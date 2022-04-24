@@ -6,7 +6,7 @@ import android.util.Log;
 
 public class ImageManipulationHelper {
 
-    //cropanje slike newWidth i newHeight u postotcima
+    //Cropping image to newWidth and newHeight to given percentage
     public static Bitmap resizeImage(Bitmap bitmap, float newWidth, float newHeight) {
          int NewWidth= Math.round(bitmap.getWidth()*(newWidth/100));
          int NewHeight=Math.round(bitmap.getHeight()*(newHeight/100));
@@ -14,14 +14,14 @@ public class ImageManipulationHelper {
         return scaledBitmap;
     }
     public static Bitmap resizeImage(Bitmap bitmap) {
-        //mijenjamo dole mijenjamo lijevo
+        //Cropping image to view bounding box
         bitmap=rotateImage(bitmap,90);
         bitmap = Bitmap.createBitmap(bitmap,(int) Math.round(bitmap.getWidth()*0.05),(int)Math.round(bitmap.getHeight()*0.43),
                 (int)Math.round(bitmap.getWidth()*0.9),(int)Math.round(bitmap.getHeight()*0.27));
         return bitmap;
     }
 
-    //rotacija slike za stupnjeve za slucaj da treba rotirat i rezat sliku
+    //Rotating image to given degree
     public static Bitmap rotateImage(Bitmap bitmap, float degrees) {
         Matrix matrix = new Matrix();
         matrix.postRotate(degrees);
@@ -29,11 +29,10 @@ public class ImageManipulationHelper {
         return rotatedBitmap;
     }
 
-    //preokretanje slike oko orijentacije
-    //za slucaj dodavanja flip botuna i rezanje slike sa vanjske strane je ovako brze
-    //orijentacija 1 drugi kvadrant
-    //orijentacija 2 treci  kvadrant
-    //orijentacija 3 cetvrti kvadrant
+    //Rotating image around the plane
+    //Orientation 1 second quadrant
+    //Orientation 2 third  quadrant
+    //Orientation 3 fourth quadrant
     public static Bitmap flipImage(Bitmap bitmap, int orientation) {
         Matrix matrix = new Matrix();
         if (orientation == 0) {

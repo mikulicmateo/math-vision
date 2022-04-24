@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
         setContentView(R.layout.activity_main);
 
-        //Asking users for permission to use storage
+        //Asking users for permission to use storage and camera
         ActivityCompat.requestPermissions(
                 this,
                 new String[]{
@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createCameraPreview() {
-        //Function for showing camera view
+        //Method for showing camera view
         try{
             SurfaceTexture texture = cameraPreview.getSurfaceTexture();
             assert  texture != null;
@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updatePreview() {
-        // Function for getting back to activity and checking camera
+        //Method for rendering camera lens output
         if(cameraDevice == null)
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
         captureRequestBuilder.set(CaptureRequest.CONTROL_MODE,CaptureRequest.CONTROL_MODE_AUTO);
@@ -223,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        // Function which checks if user gave permission for using camera
+        //Method which checks if user gave permission for using camera
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CAMERA_PERMISSION) {
             if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
