@@ -30,8 +30,7 @@ public class ConfirmActivity extends AppCompatActivity {
 
         // Creating image view from path
         Bitmap myBitmap = BitmapFactory.decodeFile(imagePath);
-        ImageManipulation manip = new ImageManipulation();
-        Bitmap test = manip.resizeImage(myBitmap);
+        Bitmap test = ImageManipulation.resizeImage(myBitmap);
         showImage.setImageBitmap(test);
     }
     catch(NullPointerException e){
