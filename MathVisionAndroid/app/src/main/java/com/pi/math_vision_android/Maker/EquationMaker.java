@@ -2,6 +2,7 @@ package com.pi.math_vision_android.Maker;
 
 import android.graphics.Bitmap;
 
+import com.pi.math_vision_android.image_processing.ImageProcessingUtility;
 import com.pi.math_vision_android.recognition_model.SymbolRecognitionModelInterface;
 
 import java.util.List;

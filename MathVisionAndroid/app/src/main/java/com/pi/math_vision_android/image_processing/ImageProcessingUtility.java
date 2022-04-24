@@ -9,6 +9,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
@@ -18,7 +19,7 @@ import java.util.List;
 public class ImageProcessingUtility {
 
 
-    public static List<Mat> preprocessImage(Bitmap bitmap){
+    public static List<Bitmap> preprocessImage(Bitmap bitmap){
         Mat image = readImage(bitmap);
         image = augmentImage(image);
         return getIndividualSymbols(image);
@@ -31,8 +32,8 @@ public class ImageProcessingUtility {
         return mat;
     }
 
-    private static List<Mat> getIndividualSymbols(Mat image) {
-        List<Mat> symbols = new ArrayList<>();
+    private static List<Bitmap> getIndividualSymbols(Mat image) {
+        List<Bitmap> symbols = new ArrayList<>();
 
         List<MatOfPoint> contours = new ArrayList<>();
         Mat hierarchy = new Mat();
@@ -50,9 +51,15 @@ public class ImageProcessingUtility {
             int y = 50 - (imageToResize.height() / 2);
 
             imageToResize.copyTo(blankImage.colRange(x, x + imageToResize.width()).rowRange(y, y + imageToResize.height()));
-
             Core.bitwise_not(blankImage, blankImage);
-            symbols.add(blankImage);
+
+            Bitmap bmp = null;
+            Mat tmp = new Mat (blankImage.rows(), blankImage.cols(), CvType.CV_8UC1, new Scalar(4));
+            Imgproc.cvtColor(blankImage, tmp, Imgproc.COLOR_GRAY2RGBA, 4);
+            bmp = Bitmap.createBitmap(tmp.cols(), tmp.rows(), Bitmap.Config.ARGB_8888);
+            Utils.matToBitmap(tmp, bmp);
+
+            symbols.add(bmp);
         }
 
         return symbols;
@@ -71,6 +78,7 @@ public class ImageProcessingUtility {
     private static List<Rect> getBoundingRectangles(List<MatOfPoint> contours){
         contours.sort(new MatOfPointComparator());
         List<Rect> boundingRects = new ArrayList<>();
+
         for (MatOfPoint contour : contours) {
             boundingRects.add(Imgproc.boundingRect(contour));
         }
