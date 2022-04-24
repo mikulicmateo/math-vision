@@ -8,11 +8,6 @@ public class SizeContainer {
     public SizeContainer() {
     }
 
-    public SizeContainer(int width, int height) {
-        this.width = width;
-        this.height = height;
-    }
-
     public int getWidth() {
         return width;
     }
