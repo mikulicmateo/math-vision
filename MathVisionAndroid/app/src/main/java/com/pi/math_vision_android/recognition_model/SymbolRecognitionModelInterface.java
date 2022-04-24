@@ -3,10 +3,10 @@ package com.pi.math_vision_android.recognition_model;
 import android.graphics.Bitmap;
 
 import com.pi.math_vision_android.MainActivity;
+import com.pi.math_vision_android.image_processing.ImageProcessingUtility;
 import com.pi.math_vision_android.ml.NumberRecognizer;
 
 import org.tensorflow.lite.DataType;
-import org.tensorflow.lite.support.image.TensorImage;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
 import java.io.IOException;
@@ -14,18 +14,16 @@ import java.nio.ByteBuffer;
 
 public class SymbolRecognitionModelInterface {
 
-    public static char getPrediction(Bitmap img){
+    public static char getPrediction(Bitmap img) {
         try {
             NumberRecognizer model = NumberRecognizer.newInstance(MainActivity.getAppContext());
 
             // Creates inputs for reference.
             TensorBuffer inputFeature = TensorBuffer.createFixedSize(new int[]{1, 100, 100, 1}, DataType.FLOAT32);
 
-            TensorImage tensorImage = new TensorImage(DataType.FLOAT32);
-            tensorImage.load(img);
-            ByteBuffer byteBuffer = tensorImage.getBuffer();
+            ByteBuffer byteBuffer = ImageProcessingUtility.getByteBufferFromBitmap(img);
 
-            inputFeature.loadBuffer(byteBuffer);
+            inputFeature.loadBuffer(byteBuffer, new int[]{1, 100, 100, 1});
 
             // Runs model inference and gets result.
             NumberRecognizer.Outputs outputs = model.process(inputFeature);
@@ -41,12 +39,12 @@ public class SymbolRecognitionModelInterface {
         }
     }
 
-    private static char getPredictedSymbol(float[] outputFeature){
+    private static char getPredictedSymbol(float[] outputFeature) {
 
         float max = 0;
         int classIndex = 0;
-        for(int i = 0; i < outputFeature.length; i++){
-            if(outputFeature[i] > max){
+        for (int i = 0; i < outputFeature.length; i++) {
+            if (outputFeature[i] > max) {
                 max = outputFeature[i];
                 classIndex = i;
             }

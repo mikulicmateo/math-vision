@@ -1,6 +1,7 @@
 package com.pi.math_vision_android.image_processing;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
@@ -13,6 +14,8 @@ import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,5 +86,19 @@ public class ImageProcessingUtility {
             boundingRects.add(Imgproc.boundingRect(contour));
         }
         return boundingRects;
+    }
+
+    public static ByteBuffer getByteBufferFromBitmap(Bitmap bitmap){
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        ByteBuffer mImgData = ByteBuffer.allocateDirect(4 * width * height);
+
+        mImgData.order(ByteOrder.nativeOrder());
+        int[] pixels = new int[width*height];
+        bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
+        for (int pixel : pixels) {
+            mImgData.putFloat((float) Color.red(pixel));
+        }
+        return mImgData;
     }
 }
