@@ -1,21 +1,9 @@
 package com.pi.math_vision_android;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.Manifest;
 import android.content.Context;
-
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.os.Environment;
-
-import java.io.File;
-
-import android.Manifest;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
@@ -24,21 +12,24 @@ import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.TotalCaptureResult;
 import android.media.ImageReader;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Environment;
 import android.os.Handler;
-import androidx.core.app.ActivityCompat;
-
-
 import android.view.Surface;
 import android.view.TextureView;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.Objects;
-
-import android.provider.Settings;
-import android.net.Uri;
 
 import helpers.CameraHelper;
 import helpers.SaveHelper;
@@ -137,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         try{
 
             //Making Math-vision folder in pictures
-            String folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + File.separator + "Math-Vision";
+            String folder = Environment.getExternalStoragePublicDirectory("") + File.separator + "Math-Vision";
             SaveHelper.createOrExistsFolder(folder);
 
             //Path where picture is stored

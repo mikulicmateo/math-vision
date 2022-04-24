@@ -1,6 +1,7 @@
 package com.pi.math_vision_android.Maker;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.pi.math_vision_android.image_processing.ImageProcessingUtility;
 import com.pi.math_vision_android.recognition_model.SymbolRecognitionModelInterface;
@@ -22,7 +23,7 @@ public class EquationMaker {
             equation = equationBuilder.toString().replace("--", "=");
         }
         else equation = equationBuilder.toString();
-
+        Log.e("Equation is:****************************", equation);
         return equation;
     }
 }
