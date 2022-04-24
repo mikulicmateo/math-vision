@@ -15,3 +15,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Math-Vision-Android"
 include ':app'
+include ':opencv'
+include ':opencv'

@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Intent namjera = new Intent(MainActivity
-                .this, JednadzbaActivity.class);//stavljeno za test maknuti mijenja layoput na jendadzbu
+                .this, EquationActivity.class);//stavljeno za test maknuti mijenja layoput na jendadzbu
         MainActivity.this.startActivity(namjera);//
         Log.e("hello", "hello world");
     }

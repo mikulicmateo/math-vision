@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MathVisionAndroid">
         <activity
-            android:name=".JednadzbaActivity"
+            android:name=".EquationActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

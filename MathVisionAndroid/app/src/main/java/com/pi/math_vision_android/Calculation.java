@@ -14,12 +14,14 @@ import java.net.URLEncoder;
 
 import jp.ac.kobe_u.cs.cream.Solution;
 
-public class Racunanje {
-    public String getAnswer(String s) {
+public class Calculation {
+
+    public String getAnswer(String equation) {
+    //creating the answer for the equation for the given string
 
         EvalUtilities util = new EvalUtilities(false,true);
         try{
-            IExpr result = util.evaluate(s);
+            IExpr result = util.evaluate(equation);
             return"$$"+ stringToJqmath(result.toString())+"$$</br>";
         }
         catch (SyntaxError e){
@@ -31,13 +33,13 @@ public class Racunanje {
         }
 
     }
-    public String stringToJqmath(String solution)  {
-        //pretvaranje sintakse od SymJA-e  u sintaksu od JQmatha
-        String prvaZamjena=solution.replaceAll("Sqrt","√");
-        String DrugaZamjena=prvaZamjena.replaceAll("Pow","^");
-        String trecaZamjena=DrugaZamjena.replaceAll("\\{", "" );
-        String Cetvrtazamjena=trecaZamjena.replaceAll("\\}", "" );
-        return Cetvrtazamjena.replaceAll(",","\\$\\$\\$\\$");
+    public String stringToJqmath(String equation)  {
+        //Changing SymJa syntax to jqMath
+        String FirstSwap=equation.replaceAll("Sqrt","√");
+        String secondSwap=FirstSwap.replaceAll("Pow","^");
+        String thirdSwap=secondSwap.replaceAll("\\{", "" );
+        String fourthSwap=thirdSwap.replaceAll("\\}", "" );
+        return fourthSwap.replaceAll(",","\\$\\$\\$\\$");
 
     }
 

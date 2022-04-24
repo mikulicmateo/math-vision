@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".JednadzbaActivity">
+    tools:context=".EquationActivity">
 
     <TableLayout
         android:id="@+id/tableLayout"
@@ -39,10 +39,10 @@
         android:width="270dp"
         android:height="100dp"
         android:insetBottom="10dp"
-        android:onClick="ponovo"
+        android:onClick="again"
         android:text="@string/ponovo"
-        android:textSize="30sp"
 
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
