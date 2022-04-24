@@ -26,7 +26,7 @@ public class SaveHelper {
         } catch (IOException e)
         {
             e.printStackTrace();
-            //TODO
+            throw new RuntimeException("Reading and saving image not possible");
         } finally {
             {
                 if(image != null)
