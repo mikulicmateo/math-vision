@@ -5,13 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import helpers.ImageManipulationHelper;
 
 public class ConfirmActivity extends AppCompatActivity {
 
@@ -30,7 +29,7 @@ public class ConfirmActivity extends AppCompatActivity {
 
         // Creating image view from path
         Bitmap myBitmap = BitmapFactory.decodeFile(imagePath);
-        Bitmap test = ImageManipulation.resizeImage(myBitmap);
+        Bitmap test = ImageManipulationHelper.resizeImage(myBitmap);
         showImage.setImageBitmap(test);
     }
     catch(NullPointerException e){

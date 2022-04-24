@@ -1,10 +1,10 @@
-package com.pi.math_vision_android;
+package helpers;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.util.Log;
 
-public class ImageManipulation {
+public class ImageManipulationHelper {
 
     //cropanje slike newWidth i newHeight u postotcima
     public static Bitmap resizeImage(Bitmap bitmap, float newWidth, float newHeight) {
