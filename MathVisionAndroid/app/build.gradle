@@ -31,6 +31,8 @@ android {
                 srcDirs 'src/main/jni', 'src/main/jniLibs'
             }
         }
+    }
+
     buildFeatures {
         mlModelBinding true
     }
