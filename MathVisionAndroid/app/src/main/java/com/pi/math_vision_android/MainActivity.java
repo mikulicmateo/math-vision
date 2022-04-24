@@ -92,21 +92,6 @@ public class MainActivity extends AppCompatActivity {
                 1
         );
 
-        // Compares build version SDK and user (smartphone) SDK
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            if(Environment.isExternalStorageManager()){
-                assert true;
-            // If you don't have access, launch a new activity to show the user the system's dialog
-            // to allow access to the external storage
-            }else{
-                Intent intent = new Intent();
-                intent.setAction(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
-                Uri uri = Uri.fromParts("package", this.getPackageName(), null);
-                intent.setData(uri);
-                startActivity(intent);
-            }
-        }
-
         cameraPreview = findViewById(R.id.cameraPreview);
         assert cameraPreview != null;
         cameraPreview.setSurfaceTextureListener(textureListener);

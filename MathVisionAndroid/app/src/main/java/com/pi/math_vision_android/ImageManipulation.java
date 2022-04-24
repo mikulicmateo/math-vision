@@ -6,8 +6,6 @@ import android.util.Log;
 
 public class ImageManipulation {
 
-    private static int width;
-
     //cropanje slike newWidth i newHeight u postotcima
     public static Bitmap resizeImage(Bitmap bitmap, float newWidth, float newHeight) {
          int NewWidth= Math.round(bitmap.getWidth()*(newWidth/100));

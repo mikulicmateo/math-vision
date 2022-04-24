@@ -61,7 +61,8 @@ public class CameraHelper {
         return imageDimension;
     }
 
-    public static ImageReader capturePicture(CameraManager cameraManager, CameraDevice cameraDevice, TextureView cameraPreview, int rotation, Context context, CameraCaptureSession.CaptureCallback captureListener) throws CameraAccessException {
+    public static ImageReader capturePicture(CameraManager cameraManager, CameraDevice cameraDevice, TextureView cameraPreview,
+                                             int rotation, Context context, CameraCaptureSession.CaptureCallback captureListener) throws CameraAccessException {
 
         if(cameraDevice == null)
             throw new CameraAccessException(CameraAccessException.CAMERA_ERROR);
