@@ -14,7 +14,7 @@ import java.nio.ByteBuffer;
 
 public class SymbolRecognitionModelInterface {
 
-    public char getPrediction(Bitmap img){
+    public static char getPrediction(Bitmap img){
         try {
             NumberRecognizer model = NumberRecognizer.newInstance(MainActivity.getAppContext());
 
@@ -41,7 +41,7 @@ public class SymbolRecognitionModelInterface {
         }
     }
 
-    private char getPredictedSymbol(float[] outputFeature){
+    private static char getPredictedSymbol(float[] outputFeature){
 
         float max = 0;
         int classIndex = 0;
@@ -55,7 +55,7 @@ public class SymbolRecognitionModelInterface {
         return mapCharacter(classIndex);
     }
 
-    private char mapCharacter(int classIndex) {
+    private static char mapCharacter(int classIndex) {
         return SymbolRecognitionModelClassConstants.CLASSES_CHARS[classIndex];
     }
 }
