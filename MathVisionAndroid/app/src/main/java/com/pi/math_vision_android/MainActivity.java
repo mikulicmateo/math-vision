@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -45,6 +46,8 @@ import listeners.ImageListener;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    private static Context appContext;
     private Button btnCapture;
     private TextureView cameraPreview;
 
@@ -80,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Objects.requireNonNull(getSupportActionBar()).hide();
         setContentView(R.layout.activity_main);
+        appContext = getApplicationContext();
 
         //Asking users for permission to use storage and camera
         ActivityCompat.requestPermissions(
@@ -117,7 +121,11 @@ public class MainActivity extends AppCompatActivity {
             }.start();
         });
     }
+  
 
+    public static Context getAppContext() {
+        return appContext;
+    }
 
     private void takePicture() {
         // Method called on button click
