@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.jstarczewski.pc.mathview.src.MathView;
 
-import helpers.CalculationHelper;
+import com.pi.math_vision_android.helpers.CalculationHelper;
 
 public class EquationActivity extends AppCompatActivity {
 

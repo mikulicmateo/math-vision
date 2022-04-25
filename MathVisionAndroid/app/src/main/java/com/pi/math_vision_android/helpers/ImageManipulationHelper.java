@@ -1,8 +1,7 @@
-package helpers;
+package com.pi.math_vision_android.helpers;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
-import android.util.Log;
 
 public class ImageManipulationHelper {
 

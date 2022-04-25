@@ -1,4 +1,4 @@
-package helpers;
+package com.pi.math_vision_android.helpers;
 
 import android.Manifest;
 import android.app.Activity;
@@ -25,9 +25,9 @@ import androidx.core.app.ActivityCompat;
 import java.util.ArrayList;
 import java.util.List;
 
-import callbacks.CaptureStateCallback;
-import constants.OrientationConstants;
-import containers.SizeContainer;
+import com.pi.math_vision_android.callbacks.CaptureStateCallback;
+import com.pi.math_vision_android.constants.OrientationConstants;
+import com.pi.math_vision_android.containers.SizeContainer;
 
 public class CameraHelper {
 

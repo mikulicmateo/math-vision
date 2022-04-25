@@ -1,4 +1,4 @@
-package callbacks;
+package com.pi.math_vision_android.callbacks;
 
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;

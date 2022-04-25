@@ -1,4 +1,4 @@
-package helpers;
+package com.pi.math_vision_android.helpers;
 
 import android.annotation.SuppressLint;
 import android.media.Image;

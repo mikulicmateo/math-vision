@@ -17,7 +17,7 @@ import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 
-import helpers.ImageManipulationHelper;
+import com.pi.math_vision_android.helpers.ImageManipulationHelper;
 
 public class ConfirmActivity extends AppCompatActivity {
 

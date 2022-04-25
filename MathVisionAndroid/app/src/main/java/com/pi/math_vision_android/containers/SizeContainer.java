@@ -1,4 +1,4 @@
-package containers;
+package com.pi.math_vision_android.containers;
 
 public class SizeContainer {
 

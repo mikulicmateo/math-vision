@@ -1,4 +1,4 @@
-package constants;
+package com.pi.math_vision_android.constants;
 
 import android.util.SparseIntArray;
 import android.view.Surface;

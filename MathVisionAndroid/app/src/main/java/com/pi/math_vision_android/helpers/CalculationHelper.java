@@ -1,18 +1,11 @@
-package helpers;
+package com.pi.math_vision_android.helpers;
 
-import android.app.Dialog;
-import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
+
 import org.matheclipse.core.eval.EvalUtilities;
 import org.matheclipse.core.interfaces.IExpr;
 import org.matheclipse.parser.client.SyntaxError;
 import org.matheclipse.parser.client.math.MathException;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
-import jp.ac.kobe_u.cs.cream.Solution;
 
 public class CalculationHelper {
 
