@@ -38,13 +38,14 @@ public class SaveHelper {
     public static void savePicture(byte[] bytes, File file) throws IOException{
         try (OutputStream outputStream = new FileOutputStream(file)) {
             outputStream.write(bytes);
+            outputStream.flush();
         }
     }
 
     public static void createOrExistsFolder(String folder){
         File directory = new File(folder);
         if(!directory.exists()){
-            directory.mkdir();
+            directory.mkdirs();
         }
     }
 
