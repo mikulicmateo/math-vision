@@ -1,11 +1,11 @@
 package com.pi.math_vision_android;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.jstarczewski.pc.mathview.src.MathView;
 
 public class EquationActivity extends AppCompatActivity {
@@ -21,7 +21,7 @@ public class EquationActivity extends AppCompatActivity {
         String equation = bundle.getString("equation");
 
             if(getResources().getString(R.string.mode).equals("night")){
-            mvTest.setBackgroundColor("lightDark");
+            mvTest.setBackgroundColor("#121212");
             mvTest.setTextColor("white");}
         mvTest.setText("Equation $$"+equation+"$$ solution:"+calc.getAnswer(equation));
 
