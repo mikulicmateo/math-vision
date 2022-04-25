@@ -17,7 +17,6 @@ public class EquationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.getSupportActionBar().hide();
         setContentView(R.layout.equation_layout);
-        CalculationHelper calc = new CalculationHelper();
         MathView mvTest = (MathView) findViewById(R.id.MathView);
         Bundle bundle = getIntent().getExtras();
         String equation = bundle.getString("equation");
@@ -25,7 +24,7 @@ public class EquationActivity extends AppCompatActivity {
             if(getResources().getString(R.string.mode).equals("night")){
             mvTest.setBackgroundColor("#121212");
             mvTest.setTextColor("white");}
-        mvTest.setText("Equation $$"+equation+"$$ solution:"+calc.getAnswer(equation));
+        mvTest.setText("Equation $$"+equation+"$$ solution:"+CalculationHelper.getAnswer(equation));
 
 
     }

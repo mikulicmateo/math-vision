@@ -16,7 +16,7 @@ import jp.ac.kobe_u.cs.cream.Solution;
 
 public class CalculationHelper {
 
-    public String getAnswer(String equation) {
+    public static String getAnswer(String equation) {
     //creating the answer for the equation for the given string
 
         EvalUtilities util = new EvalUtilities(false,true);
@@ -33,7 +33,7 @@ public class CalculationHelper {
         }
 
     }
-    public String stringToJqmath(String equation)  {
+    public static String stringToJqmath(String equation)  {
         //Changing SymJa syntax to jqMath
         String FirstSwap=equation.replaceAll("Sqrt","√");
         String secondSwap=FirstSwap.replaceAll("Pow","^");
