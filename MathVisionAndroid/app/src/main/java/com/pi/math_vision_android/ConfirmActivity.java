@@ -76,7 +76,7 @@ public class ConfirmActivity extends AppCompatActivity {
             }
         }
     };
-    public void toEquation(View v)
+    public void clickConfirm(View v)
     {
         Intent intent = new Intent(ConfirmActivity.this,EquationActivity.class);
         intent.putExtra("equation", equation);

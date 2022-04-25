@@ -79,7 +79,7 @@
                     android:layout_height="match_parent"
                     android:layout_margin="15dp"
                     android:layout_weight="1"
-                    android:onClick="toEquation"
+                    android:onClick="clickConfirm"
                     android:text="Confirm" />
 
             </LinearLayout>
