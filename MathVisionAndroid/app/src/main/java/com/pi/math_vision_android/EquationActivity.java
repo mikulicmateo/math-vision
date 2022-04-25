@@ -22,7 +22,7 @@ public class EquationActivity extends AppCompatActivity {
             if(getResources().getString(R.string.mode).equals("night")){
             mvTest.setBackgroundColor("black");
             mvTest.setTextColor("white");}
-        mvTest.setText("Equation solution:"+"$$"+equation+"$$ je "+calc.getAnswer(equation));
+        mvTest.setText("Equation $$"+equation+"$$ solution:"+calc.getAnswer(equation));
 
 
     }
