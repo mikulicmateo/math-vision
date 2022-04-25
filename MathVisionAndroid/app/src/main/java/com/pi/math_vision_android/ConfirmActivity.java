@@ -64,7 +64,7 @@ public class ConfirmActivity extends AppCompatActivity {
         public void onManagerConnected(int status) {
             switch (status) {
                 case LoaderCallbackInterface.SUCCESS: {
-                    Log.i("jesam/nisam", "OpenCV loaded successfully!");
+                    Log.i("OpenCV", "OpenCV loaded successfully!");
                     equation=EquationMaker.imageToEquation(bitmap);
                     textViewFormula.setText(equation);
                 }
