@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.jstarczewski.pc.mathview.src.MathView;
 
+import helpers.CalculationHelper;
+
 public class EquationActivity extends AppCompatActivity {
 
     @Override
@@ -15,7 +17,7 @@ public class EquationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.getSupportActionBar().hide();
         setContentView(R.layout.equation_layout);
-        Calculation calc = new Calculation();
+        CalculationHelper calc = new CalculationHelper();
         MathView mvTest = (MathView) findViewById(R.id.MathView);
         Bundle bundle = getIntent().getExtras();
         String equation = bundle.getString("equation");

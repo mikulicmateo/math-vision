@@ -1,4 +1,4 @@
-package com.pi.math_vision_android;
+package helpers;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import java.net.URLEncoder;
 
 import jp.ac.kobe_u.cs.cream.Solution;
 
-public class Calculation {
+public class CalculationHelper {
 
     public String getAnswer(String equation) {
     //creating the answer for the equation for the given string
