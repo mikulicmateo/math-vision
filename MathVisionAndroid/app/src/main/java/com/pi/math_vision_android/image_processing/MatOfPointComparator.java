@@ -14,10 +14,7 @@ public class MatOfPointComparator implements Comparator<MatOfPoint> {
         Rect rect1 = Imgproc.boundingRect(o1);
         Rect rect2 = Imgproc.boundingRect(o2);
         int result = 0;
-        double total = rect1.tl().y/rect2.tl().y;
-        if (total>=0.9 && total<=1.4 ){
-            result = Double.compare(rect1.tl().x, rect2.tl().x);
-        }
+        result = Double.compare(rect1.tl().x, rect2.tl().x);
         return result;
     }
 }

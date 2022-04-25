@@ -72,7 +72,7 @@ public class ImageProcessingUtility {
         Imgproc.cvtColor(mat, mat, Imgproc.COLOR_BGR2GRAY); //grayscale
         Imgproc.blur(mat,mat, new Size(5,5));
         Imgproc.threshold(mat, mat, 125, 250, Imgproc.THRESH_BINARY_INV); // thresholding
-        Mat rectKernel = Imgproc.getStructuringElement(Imgproc.CV_SHAPE_RECT, new Size(2,2));
+        Mat rectKernel = Imgproc.getStructuringElement(Imgproc.CV_SHAPE_RECT, new Size(3,3));
         Imgproc.dilate(mat, mat, rectKernel, new Point(-1,-1), 3); //dilation
 
         return mat;

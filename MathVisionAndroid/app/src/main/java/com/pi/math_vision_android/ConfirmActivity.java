@@ -22,13 +22,14 @@ import helpers.ImageManipulationHelper;
 public class ConfirmActivity extends AppCompatActivity {
 
     private Bitmap bitmap;
+    private TextView textViewFormula;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getSupportActionBar().hide();
         setContentView(R.layout.activity_confirm);
-        TextView textView = findViewById(R.id.textViewFormula);
+        textViewFormula = findViewById(R.id.textViewFormula);
         ImageView showImage = findViewById(R.id.imageView);
 
     try {
@@ -45,7 +46,7 @@ public class ConfirmActivity extends AppCompatActivity {
                 onCreate(savedInstanceState);
     }
     catch (Exception e) {
-        textView.append(e.toString());
+        textViewFormula.append(e.toString());
     }
 
     }
@@ -64,7 +65,7 @@ public class ConfirmActivity extends AppCompatActivity {
             switch (status) {
                 case LoaderCallbackInterface.SUCCESS: {
                     Log.i("jesam/nisam", "OpenCV loaded successfully!");
-                    EquationMaker.imageToEquation(bitmap);
+                    textViewFormula.setText(EquationMaker.imageToEquation(bitmap));
                 }
                 break;
                 default: {
