@@ -16,11 +16,13 @@ public class EquationActivity extends AppCompatActivity {
         setContentView(R.layout.equation_layout);
         Calculation calc = new Calculation();
         MathView mvTest = (MathView) findViewById(R.id.MathView);
+        Bundle bundle = getIntent().getExtras();
+        String equation = bundle.getString("equation");
 
             if(getResources().getString(R.string.mode).equals("night")){
             mvTest.setBackgroundColor("black");
             mvTest.setTextColor("white");}
-        mvTest.setText("Equation solution:"+"$$equation here$$ je "+calc.getAnswer("1920-1080"));//Test code
+        mvTest.setText("Equation solution:"+"$$"+equation+"$$ je "+calc.getAnswer(equation));
 
 
     }

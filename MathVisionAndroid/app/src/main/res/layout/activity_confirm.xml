@@ -73,13 +73,14 @@
                         android:onClick="clickRetry"
                         android:text="Retry" />
 
-                    <Button
-                        android:id="@+id/buttonConfirm"
-                        android:layout_width="40dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="15dp"
-                        android:layout_weight="1"
-                        android:text="Confirm" />
+                <Button
+                    android:id="@+id/buttonConfirm"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="15dp"
+                    android:layout_weight="1"
+                    android:onClick="toEquation"
+                    android:text="Confirm" />
 
             </LinearLayout>
         </LinearLayout>

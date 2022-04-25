@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 rootProject.name = "Math-Vision-Android"
 include ':app'
 include ':OpenCV455'
+include ':OpenCV455'
