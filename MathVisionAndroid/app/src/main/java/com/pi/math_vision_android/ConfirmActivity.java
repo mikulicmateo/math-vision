@@ -17,12 +17,13 @@ import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 
-import helpers.ImageManipulationHelper;
+import com.pi.math_vision_android.helpers.ImageManipulationHelper;
 
 public class ConfirmActivity extends AppCompatActivity {
 
     private Bitmap bitmap;
     private TextView textViewFormula;
+    private String equation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +59,14 @@ public class ConfirmActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
-
     private final BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
         public void onManagerConnected(int status) {
             switch (status) {
                 case LoaderCallbackInterface.SUCCESS: {
-                    Log.i("jesam/nisam", "OpenCV loaded successfully!");
-                    textViewFormula.setText(EquationMaker.imageToEquation(bitmap));
+                    Log.i("OpenCV", "OpenCV loaded successfully!");
+                    equation=EquationMaker.imageToEquation(bitmap);
+                    textViewFormula.setText(equation);
                 }
                 break;
                 default: {
@@ -75,7 +76,12 @@ public class ConfirmActivity extends AppCompatActivity {
             }
         }
     };
-
+    public void clickConfirm(View v)
+    {
+        Intent intent = new Intent(ConfirmActivity.this,EquationActivity.class);
+        intent.putExtra("equation", equation);
+        ConfirmActivity.this.startActivity(intent);
+    }
     @Override
     public void onResume() {
         super.onResume();

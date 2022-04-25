@@ -31,9 +31,9 @@ import java.io.File;
 import java.util.Collections;
 import java.util.Objects;
 
-import helpers.CameraHelper;
-import helpers.SaveHelper;
-import listeners.ImageListener;
+import com.pi.math_vision_android.helpers.CameraHelper;
+import com.pi.math_vision_android.helpers.SaveHelper;
+import com.pi.math_vision_android.listeners.ImageListener;
 
 public class MainActivity extends AppCompatActivity {
 

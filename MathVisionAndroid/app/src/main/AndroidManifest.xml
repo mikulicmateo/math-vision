@@ -20,6 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MathVisionAndroid">
         <activity
+            android:name=".EquationActivity"
+            android:exported="false" />
+        <activity
             android:name=".ConfirmActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
