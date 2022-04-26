@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import com.pi.math_vision_android.MainActivity;
 import com.pi.math_vision_android.constants.SymbolRecognitionModelClassConstants;
 import com.pi.math_vision_android.image_processing.ImageProcessingUtility;
-import com.pi.math_vision_android.ml.NumberRecognizer;
+import com.pi.math_vision_android.ml.NumberRecognizerV1;
 
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
@@ -17,7 +17,7 @@ public class SymbolRecognitionModelInterface {
 
     public static char getPrediction(Bitmap img) {
         try {
-            NumberRecognizer model = NumberRecognizer.newInstance(MainActivity.getAppContext());
+            NumberRecognizerV1 model = NumberRecognizerV1.newInstance(MainActivity.getAppContext());
 
             // Creates inputs for reference.
             TensorBuffer inputFeature = TensorBuffer.createFixedSize(new int[]{1, 100, 100, 1}, DataType.FLOAT32);
@@ -27,7 +27,7 @@ public class SymbolRecognitionModelInterface {
             inputFeature.loadBuffer(byteBuffer, new int[]{1, 100, 100, 1});
 
             // Runs model inference and gets result.
-            NumberRecognizer.Outputs outputs = model.process(inputFeature);
+            NumberRecognizerV1.Outputs outputs = model.process(inputFeature);
             TensorBuffer outputFeature = outputs.getOutputFeature0AsTensorBuffer();
 
             char symbol = getPredictedSymbol(outputFeature.getFloatArray());
