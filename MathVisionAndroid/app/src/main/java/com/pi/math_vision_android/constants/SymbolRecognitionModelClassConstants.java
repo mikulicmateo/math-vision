@@ -1,4 +1,4 @@
-package com.pi.math_vision_android.recognition_model;
+package com.pi.math_vision_android.constants;
 
 public class SymbolRecognitionModelClassConstants {
 

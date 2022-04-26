@@ -3,6 +3,7 @@ package com.pi.math_vision_android.recognition_model;
 import android.graphics.Bitmap;
 
 import com.pi.math_vision_android.MainActivity;
+import com.pi.math_vision_android.constants.SymbolRecognitionModelClassConstants;
 import com.pi.math_vision_android.image_processing.ImageProcessingUtility;
 import com.pi.math_vision_android.ml.NumberRecognizer;
 
