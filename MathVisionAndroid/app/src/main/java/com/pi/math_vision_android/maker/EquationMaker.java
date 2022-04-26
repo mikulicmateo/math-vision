@@ -24,7 +24,7 @@ public class EquationMaker {
 
     private static String clearEquation(StringBuilder stringBuilder){
         String equation = stringBuilder.toString().replace("--", "=");
-        stringBuilder.setLength(0);
+        stringBuilder.delete(0, stringBuilder.length());
         int N = equation.length();
         int i = 0;
 
@@ -34,6 +34,8 @@ public class EquationMaker {
             if(!Character.isDigit(c))
                 while (i<N && equation.charAt(i)==c)
                     ++i;
+            else
+                ++i;
         }
         return stringBuilder.toString();
     }
