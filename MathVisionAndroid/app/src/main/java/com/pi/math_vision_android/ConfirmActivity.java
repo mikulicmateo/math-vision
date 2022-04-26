@@ -33,23 +33,22 @@ public class ConfirmActivity extends AppCompatActivity {
         textViewFormula = findViewById(R.id.textViewFormula);
         ImageView showImage = findViewById(R.id.imageView);
 
-    try {
-        // Getting path of image
-        Bundle extras = getIntent().getExtras();
-        String imagePath = extras.getString("ImagePath");
+        try {
+            // Getting path of image
+            Bundle extras = getIntent().getExtras();
+            String imagePath = extras.getString("ImagePath");
 
-        // Creating image view from path
-        Bitmap myBitmap = BitmapFactory.decodeFile(imagePath);
-        this.bitmap = ImageManipulationHelper.resizeImage(myBitmap);
-        showImage.setImageBitmap(bitmap);
-    }
-    catch(NullPointerException e){
-                onCreate(savedInstanceState);
-    }
-    catch (Exception e) {
-        textViewFormula.append(e.toString());
-    }
-
+            // Creating image view from path
+            Bitmap myBitmap = BitmapFactory.decodeFile(imagePath);
+            this.bitmap = ImageManipulationHelper.resizeImage(myBitmap);
+            showImage.setImageBitmap(bitmap);
+        }
+        catch(NullPointerException e){
+                    onCreate(savedInstanceState);
+        }
+        catch (Exception e) {
+            textViewFormula.append(e.toString());
+        }
     }
 
     public void clickRetry(View view)

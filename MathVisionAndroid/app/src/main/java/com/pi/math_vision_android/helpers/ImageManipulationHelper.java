@@ -12,6 +12,7 @@ public class ImageManipulationHelper {
         Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, NewWidth, NewHeight, true);
         return scaledBitmap;
     }
+
     public static Bitmap resizeImage(Bitmap bitmap) {
         //Cropping image to view bounding box
         bitmap=rotateImage(bitmap,90);
