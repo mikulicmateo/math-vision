@@ -4,18 +4,16 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CaptureRequest;
-import android.hardware.camera2.TotalCaptureResult;
-import android.media.ImageReader;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Environment;
 import android.os.Handler;
 import android.view.Surface;
 import android.view.TextureView;
@@ -27,13 +25,12 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import java.io.File;
+import java.io.ByteArrayOutputStream;
 import java.util.Collections;
 import java.util.Objects;
 
 import com.pi.math_vision_android.helpers.CameraHelper;
-import com.pi.math_vision_android.helpers.SaveHelper;
-import com.pi.math_vision_android.listeners.ImageListener;
+import com.pi.math_vision_android.helpers.ImageManipulationHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,9 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private CameraCaptureSession cameraCaptureSessions;
     private CaptureRequest.Builder captureRequestBuilder;
 
-    //Save to FILE
-    private File file;
     private static final int REQUEST_CAMERA_PERMISSION = 200;
+    private Bitmap bitmap;
 
     CameraDevice.StateCallback stateCallback = new CameraDevice.StateCallback() {
         @Override
@@ -101,8 +97,14 @@ public class MainActivity extends AppCompatActivity {
                 public void onFinish() {
                     // When timer is finished
                     // This is for opening ConfirmActivity
+                    bitmap = ImageManipulationHelper.resizeImage(bitmap);
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                    byte[] byteArray = stream.toByteArray();
+
                     Intent intent = new Intent(MainActivity.this, ConfirmActivity.class);
-                    intent.putExtra("ImagePath", file.toString());
+                    intent.putExtra("image",byteArray);
+
                     startActivity(intent);
                 }
 
@@ -124,37 +126,8 @@ public class MainActivity extends AppCompatActivity {
 
         if(cameraDevice == null)
             return;
-        CameraManager manager = (CameraManager)getSystemService(Context.CAMERA_SERVICE);
-        try{
 
-            //Making Math-vision folder in pictures
-            String folder = Environment.getExternalStoragePublicDirectory("") + File.separator + "Math-Vision";
-            SaveHelper.createOrExistsFolder(folder);
-
-            //Path where picture is stored
-            String date = SaveHelper.createDateString();
-            file = new File(folder + File.separator + "Picture_" + date + ".jpg");
-
-            final CameraCaptureSession.CaptureCallback captureListener = new CameraCaptureSession.CaptureCallback() {
-                @Override
-                public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
-                    // Showing location of picture
-                    super.onCaptureCompleted(session, request, result);
-                    Toast.makeText(MainActivity.this, "Saved: "+file, Toast.LENGTH_SHORT).show();
-                    createCameraPreview();
-                }
-            };
-
-            ImageReader reader = CameraHelper.capturePicture(manager, cameraDevice, cameraPreview, getWindowManager().getDefaultDisplay().getRotation(),this, captureListener);
-
-            //create image listener
-            ImageListener readerListener = new ImageListener(file);
-
-            reader.setOnImageAvailableListener(readerListener, new Handler());
-
-        } catch (CameraAccessException e) {
-            e.printStackTrace();
-        }
+        bitmap = cameraPreview.getBitmap();;
     }
 
     private void createCameraPreview() {

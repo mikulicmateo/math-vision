@@ -34,13 +34,11 @@ public class ConfirmActivity extends AppCompatActivity {
         ImageView showImage = findViewById(R.id.imageView);
 
         try {
-            // Getting path of image
             Bundle extras = getIntent().getExtras();
-            String imagePath = extras.getString("ImagePath");
 
-            // Creating image view from path
-            Bitmap myBitmap = BitmapFactory.decodeFile(imagePath);
-            this.bitmap = ImageManipulationHelper.resizeImage(myBitmap);
+            byte[] byteArray = getIntent().getByteArrayExtra("image");
+            bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+
             showImage.setImageBitmap(bitmap);
         }
         catch(NullPointerException e){
