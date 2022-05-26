@@ -1,6 +1,5 @@
 package com.pi.math_vision_android;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,7 +10,6 @@ import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CaptureRequest;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -21,9 +19,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Collections;
@@ -33,7 +29,6 @@ import com.pi.math_vision_android.helpers.CameraHelper;
 import com.pi.math_vision_android.helpers.ImageManipulationHelper;
 
 public class MainActivity extends AppCompatActivity {
-
 
     private static Context appContext;
     private Button btnCapture;
@@ -64,24 +59,11 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    @RequiresApi(api = Build.VERSION_CODES.R)
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Objects.requireNonNull(getSupportActionBar()).hide();
         setContentView(R.layout.activity_main);
         appContext = getApplicationContext();
-
-        //Asking users for permission to use storage and camera
-        ActivityCompat.requestPermissions(
-                this,
-                new String[]{
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.MANAGE_EXTERNAL_STORAGE,
-                        Manifest.permission.CAMERA
-                },
-                1
-        );
 
         cameraPreview = findViewById(R.id.cameraPreview);
         assert cameraPreview != null;
@@ -90,7 +72,11 @@ public class MainActivity extends AppCompatActivity {
         // On click Take picture and start new activity
         btnCapture = findViewById(R.id.buttonTakePicture);
         btnCapture.setOnClickListener(view -> {
-            takePicture();
+
+            if(cameraDevice == null)
+                return;
+
+            bitmap = cameraPreview.getBitmap();
 
             //Timer for delaying opening new activity
             new CountDownTimer(500, 50) {
@@ -114,20 +100,9 @@ public class MainActivity extends AppCompatActivity {
             }.start();
         });
     }
-  
 
     public static Context getAppContext() {
         return appContext;
-    }
-
-    private void takePicture() {
-        // Method called on button click
-        // Create, save and show picture
-
-        if(cameraDevice == null)
-            return;
-
-        bitmap = cameraPreview.getBitmap();;
     }
 
     private void createCameraPreview() {
