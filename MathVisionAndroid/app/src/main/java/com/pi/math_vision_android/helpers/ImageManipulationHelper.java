@@ -3,14 +3,15 @@ package com.pi.math_vision_android.helpers;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 
+import java.io.ByteArrayOutputStream;
+
 public class ImageManipulationHelper {
 
     //Cropping image to newWidth and newHeight to given percentage
     public static Bitmap resizeImage(Bitmap bitmap, float newWidth, float newHeight) {
          int NewWidth= Math.round(bitmap.getWidth()*(newWidth/100));
          int NewHeight=Math.round(bitmap.getHeight()*(newHeight/100));
-        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, NewWidth, NewHeight, true);
-        return scaledBitmap;
+        return Bitmap.createScaledBitmap(bitmap, NewWidth, NewHeight, true);
     }
 
     public static Bitmap resizeImage(Bitmap bitmap) {
@@ -25,8 +26,7 @@ public class ImageManipulationHelper {
     public static Bitmap rotateImage(Bitmap bitmap, float degrees) {
         Matrix matrix = new Matrix();
         matrix.postRotate(degrees);
-        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-        return rotatedBitmap;
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 
     //Rotating image around the plane
@@ -44,8 +44,15 @@ public class ImageManipulationHelper {
         } else if (orientation == 3) {
             matrix.postScale(1, 1);
         }
-        Bitmap flippedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-        return flippedBitmap;
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+    }
+
+    public static byte[] convertBitmapToByteArray(Bitmap bitmap){
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+
+        return stream.toByteArray();
     }
 }
 

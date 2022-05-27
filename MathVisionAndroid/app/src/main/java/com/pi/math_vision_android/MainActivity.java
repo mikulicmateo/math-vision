@@ -3,7 +3,6 @@ package com.pi.math_vision_android;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
@@ -11,7 +10,6 @@ import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CaptureRequest;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.Surface;
 import android.view.TextureView;
@@ -21,12 +19,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.ByteArrayOutputStream;
+import com.pi.math_vision_android.helpers.CameraHelper;
+
 import java.util.Collections;
 import java.util.Objects;
-
-import com.pi.math_vision_android.helpers.CameraHelper;
-import com.pi.math_vision_android.helpers.ImageManipulationHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
     private CaptureRequest.Builder captureRequestBuilder;
 
     private static final int REQUEST_CAMERA_PERMISSION = 200;
-    private Bitmap bitmap;
 
     CameraDevice.StateCallback stateCallback = new CameraDevice.StateCallback() {
         @Override
@@ -69,35 +64,20 @@ public class MainActivity extends AppCompatActivity {
         assert cameraPreview != null;
         cameraPreview.setSurfaceTextureListener(textureListener);
 
-        // On click Take picture and start new activity
         btnCapture = findViewById(R.id.buttonTakePicture);
+        // On click Take picture and start new activity
         btnCapture.setOnClickListener(view -> {
 
             if(cameraDevice == null)
                 return;
 
-            bitmap = cameraPreview.getBitmap();
+            byte[] bitmapByteArray = CameraHelper.takePicture(cameraPreview);
 
-            //Timer for delaying opening new activity
-            new CountDownTimer(500, 50) {
-                public void onFinish() {
-                    // When timer is finished
-                    // This is for opening ConfirmActivity
-                    bitmap = ImageManipulationHelper.resizeImage(bitmap);
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-                    byte[] byteArray = stream.toByteArray();
+            Intent intent = new Intent(MainActivity.this, ConfirmActivity.class);
+            intent.putExtra("image",bitmapByteArray);
 
-                    Intent intent = new Intent(MainActivity.this, ConfirmActivity.class);
-                    intent.putExtra("image",byteArray);
+            startActivity(intent);
 
-                    startActivity(intent);
-                }
-
-                public void onTick(long millisUntilFinished) {
-                    // millisUntilFinished The amount of time until finished.
-                }
-            }.start();
         });
     }
 
@@ -137,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         //Method for rendering camera lens output
         if(cameraDevice == null)
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
-        captureRequestBuilder.set(CaptureRequest.CONTROL_MODE,CaptureRequest.CONTROL_MODE_AUTO);
+            captureRequestBuilder.set(CaptureRequest.CONTROL_MODE,CaptureRequest.CONTROL_MODE_AUTO);
         try{
             cameraCaptureSessions.setRepeatingRequest(captureRequestBuilder.build(),null, new Handler());
         } catch (CameraAccessException e) {

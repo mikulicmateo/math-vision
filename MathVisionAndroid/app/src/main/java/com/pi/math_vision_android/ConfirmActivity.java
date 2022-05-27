@@ -17,7 +17,6 @@ import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 
-import com.pi.math_vision_android.helpers.ImageManipulationHelper;
 
 public class ConfirmActivity extends AppCompatActivity {
 
@@ -34,8 +33,6 @@ public class ConfirmActivity extends AppCompatActivity {
         ImageView showImage = findViewById(R.id.imageView);
 
         try {
-            Bundle extras = getIntent().getExtras();
-
             byte[] byteArray = getIntent().getByteArrayExtra("image");
             bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
 
