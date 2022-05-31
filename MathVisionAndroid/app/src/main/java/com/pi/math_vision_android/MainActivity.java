@@ -1,6 +1,5 @@
 package com.pi.math_vision_android;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,12 +9,7 @@ import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CaptureRequest;
-import android.hardware.camera2.TotalCaptureResult;
-import android.media.ImageReader;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.os.Environment;
 import android.os.Handler;
 import android.view.Surface;
 import android.view.TextureView;
@@ -23,20 +17,14 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import java.io.File;
+import com.pi.math_vision_android.helpers.CameraHelper;
+
 import java.util.Collections;
 import java.util.Objects;
 
-import com.pi.math_vision_android.helpers.CameraHelper;
-import com.pi.math_vision_android.helpers.SaveHelper;
-import com.pi.math_vision_android.listeners.ImageListener;
-
 public class MainActivity extends AppCompatActivity {
-
 
     private static Context appContext;
     private Button btnCapture;
@@ -46,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
     private CameraCaptureSession cameraCaptureSessions;
     private CaptureRequest.Builder captureRequestBuilder;
 
-    //Save to FILE
-    private File file;
     private static final int REQUEST_CAMERA_PERMISSION = 200;
 
     CameraDevice.StateCallback stateCallback = new CameraDevice.StateCallback() {
@@ -68,93 +54,35 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    @RequiresApi(api = Build.VERSION_CODES.R)
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Objects.requireNonNull(getSupportActionBar()).hide();
         setContentView(R.layout.activity_main);
         appContext = getApplicationContext();
 
-        //Asking users for permission to use storage and camera
-        ActivityCompat.requestPermissions(
-                this,
-                new String[]{
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.MANAGE_EXTERNAL_STORAGE,
-                        Manifest.permission.CAMERA
-                },
-                1
-        );
-
         cameraPreview = findViewById(R.id.cameraPreview);
         assert cameraPreview != null;
         cameraPreview.setSurfaceTextureListener(textureListener);
 
-        // On click Take picture and start new activity
         btnCapture = findViewById(R.id.buttonTakePicture);
+        // On click Take picture and start new activity
         btnCapture.setOnClickListener(view -> {
-            takePicture();
 
-            //Timer for delaying opening new activity
-            new CountDownTimer(500, 50) {
-                public void onFinish() {
-                    // When timer is finished
-                    // This is for opening ConfirmActivity
-                    Intent intent = new Intent(MainActivity.this, ConfirmActivity.class);
-                    intent.putExtra("ImagePath", file.toString());
-                    startActivity(intent);
-                }
+            if(cameraDevice == null)
+                return;
 
-                public void onTick(long millisUntilFinished) {
-                    // millisUntilFinished The amount of time until finished.
-                }
-            }.start();
+            byte[] bitmapByteArray = CameraHelper.takePicture(cameraPreview);
+
+            Intent intent = new Intent(MainActivity.this, ConfirmActivity.class);
+            intent.putExtra("image",bitmapByteArray);
+
+            startActivity(intent);
+
         });
     }
-  
 
     public static Context getAppContext() {
         return appContext;
-    }
-
-    private void takePicture() {
-        // Method called on button click
-        // Create, save and show picture
-
-        if(cameraDevice == null)
-            return;
-        CameraManager manager = (CameraManager)getSystemService(Context.CAMERA_SERVICE);
-        try{
-
-            //Making Math-vision folder in pictures
-            String folder = Environment.getExternalStoragePublicDirectory("") + File.separator + "Math-Vision";
-            SaveHelper.createOrExistsFolder(folder);
-
-            //Path where picture is stored
-            String date = SaveHelper.createDateString();
-            file = new File(folder + File.separator + "Picture_" + date + ".jpg");
-
-            final CameraCaptureSession.CaptureCallback captureListener = new CameraCaptureSession.CaptureCallback() {
-                @Override
-                public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
-                    // Showing location of picture
-                    super.onCaptureCompleted(session, request, result);
-                    Toast.makeText(MainActivity.this, "Saved: "+file, Toast.LENGTH_SHORT).show();
-                    createCameraPreview();
-                }
-            };
-
-            ImageReader reader = CameraHelper.capturePicture(manager, cameraDevice, cameraPreview, getWindowManager().getDefaultDisplay().getRotation(),this, captureListener);
-
-            //create image listener
-            ImageListener readerListener = new ImageListener(file);
-
-            reader.setOnImageAvailableListener(readerListener, new Handler());
-
-        } catch (CameraAccessException e) {
-            e.printStackTrace();
-        }
     }
 
     private void createCameraPreview() {
@@ -189,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         //Method for rendering camera lens output
         if(cameraDevice == null)
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
-        captureRequestBuilder.set(CaptureRequest.CONTROL_MODE,CaptureRequest.CONTROL_MODE_AUTO);
+            captureRequestBuilder.set(CaptureRequest.CONTROL_MODE,CaptureRequest.CONTROL_MODE_AUTO);
         try{
             cameraCaptureSessions.setRepeatingRequest(captureRequestBuilder.build(),null, new Handler());
         } catch (CameraAccessException e) {

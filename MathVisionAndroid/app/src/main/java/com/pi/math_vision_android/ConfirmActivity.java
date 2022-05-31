@@ -17,7 +17,6 @@ import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 
-import com.pi.math_vision_android.helpers.ImageManipulationHelper;
 
 public class ConfirmActivity extends AppCompatActivity {
 
@@ -34,13 +33,9 @@ public class ConfirmActivity extends AppCompatActivity {
         ImageView showImage = findViewById(R.id.imageView);
 
         try {
-            // Getting path of image
-            Bundle extras = getIntent().getExtras();
-            String imagePath = extras.getString("ImagePath");
+            byte[] byteArray = getIntent().getByteArrayExtra("image");
+            bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
 
-            // Creating image view from path
-            Bitmap myBitmap = BitmapFactory.decodeFile(imagePath);
-            this.bitmap = ImageManipulationHelper.resizeImage(myBitmap);
             showImage.setImageBitmap(bitmap);
         }
         catch(NullPointerException e){
