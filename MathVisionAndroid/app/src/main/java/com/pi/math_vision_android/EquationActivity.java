@@ -19,7 +19,7 @@ public class EquationActivity extends AppCompatActivity {
         setContentView(R.layout.equation_layout);
         MathView mvTest = (MathView) findViewById(R.id.MathView);
         Bundle bundle = getIntent().getExtras();
-        String equation = bundle.getString("equation");
+        String equation = bundle.getString("textEquation");
 
         if(getResources().getString(R.string.mode).equals("night")){
             mvTest.setBackgroundColor("#121212");
