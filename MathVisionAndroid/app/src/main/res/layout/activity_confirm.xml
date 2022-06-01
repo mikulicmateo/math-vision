@@ -47,14 +47,16 @@
                 android:layout_weight="0.5"
                 >
 
-                <TextView
-                    android:id="@+id/textViewFormula"
+                <EditText
+                    android:id="@+id/editTextEquation"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:layout_gravity="center"
                     android:textSize="20sp"
-                    android:text="Is this correct formula?\nHere comes formula!" />
+                    android:inputType="text"
+                    android:text="Equation"/>
+
             </LinearLayout>
 
             <LinearLayout

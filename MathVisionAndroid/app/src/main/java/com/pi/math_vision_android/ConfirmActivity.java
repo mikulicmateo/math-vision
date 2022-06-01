@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,7 +22,7 @@ import org.opencv.android.OpenCVLoader;
 public class ConfirmActivity extends AppCompatActivity {
 
     private Bitmap bitmap;
-    private TextView textViewFormula;
+    private EditText equationText;
     private String equation;
 
     @Override
@@ -29,7 +30,7 @@ public class ConfirmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.getSupportActionBar().hide();
         setContentView(R.layout.activity_confirm);
-        textViewFormula = findViewById(R.id.textViewFormula);
+        equationText = findViewById(R.id.editTextEquation);
         ImageView showImage = findViewById(R.id.imageView);
 
         try {
@@ -42,7 +43,7 @@ public class ConfirmActivity extends AppCompatActivity {
                     onCreate(savedInstanceState);
         }
         catch (Exception e) {
-            textViewFormula.append(e.toString());
+            equationText.append(e.toString());
         }
     }
 
@@ -60,7 +61,7 @@ public class ConfirmActivity extends AppCompatActivity {
                 case LoaderCallbackInterface.SUCCESS: {
                     Log.i("OpenCV", "OpenCV loaded successfully!");
                     equation=EquationMaker.imageToEquation(bitmap);
-                    textViewFormula.setText(equation);
+                    equationText.setText(equation);
                 }
                 break;
                 default: {
@@ -73,7 +74,7 @@ public class ConfirmActivity extends AppCompatActivity {
     public void clickConfirm(View v)
     {
         Intent intent = new Intent(ConfirmActivity.this,EquationActivity.class);
-        intent.putExtra("equation", equation);
+        intent.putExtra("textEquation", equationText.getText().toString());
         ConfirmActivity.this.startActivity(intent);
     }
     @Override
