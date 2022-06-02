@@ -4,16 +4,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.SurfaceTexture;
+import android.graphics.drawable.Drawable;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CaptureRequest;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,12 +34,15 @@ public class MainActivity extends AppCompatActivity {
     private static Context appContext;
     private Button btnCapture;
     private TextureView cameraPreview;
+    private ImageButton button_flash;
 
     private CameraDevice cameraDevice;
     private CameraCaptureSession cameraCaptureSessions;
     private CaptureRequest.Builder captureRequestBuilder;
 
     private static final int REQUEST_CAMERA_PERMISSION = 200;
+
+    private boolean isFlashOn = false;
 
     CameraDevice.StateCallback stateCallback = new CameraDevice.StateCallback() {
         @Override
@@ -64,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         assert cameraPreview != null;
         cameraPreview.setSurfaceTextureListener(textureListener);
 
+        button_flash = (ImageButton)findViewById(R.id.button_flash);
         btnCapture = findViewById(R.id.buttonTakePicture);
         // On click Take picture and start new activity
         btnCapture.setOnClickListener(view -> {
@@ -75,11 +84,15 @@ public class MainActivity extends AppCompatActivity {
 
             Intent intent = new Intent(MainActivity.this, ConfirmActivity.class);
             intent.putExtra("image",bitmapByteArray);
-
+            if(isFlashOn) {
+                actionFlash(view);
+            }
             startActivity(intent);
 
         });
     }
+
+
 
     public static Context getAppContext() {
         return appContext;
@@ -157,6 +170,27 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "You can't use camera without permission", Toast.LENGTH_SHORT).show();
                 finish();
             }
+        }
+    }
+
+    public void actionFlash(View view) {
+        try{
+            if(isFlashOn){
+                button_flash.setImageResource(R.drawable.ic_flash_on);
+                cameraCaptureSessions.stopRepeating();
+                captureRequestBuilder.set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_OFF);
+                updatePreview();
+                isFlashOn = false;
+            }
+            else{
+                button_flash.setImageResource(R.drawable.ic_flash_off);
+                cameraCaptureSessions.stopRepeating();
+                captureRequestBuilder.set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_TORCH);
+                updatePreview();
+                isFlashOn = true;
+            }
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
         }
     }
 }
