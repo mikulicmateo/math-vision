@@ -80,13 +80,14 @@ public class MainActivity extends AppCompatActivity {
             if(cameraDevice == null)
                 return;
 
+            if(isFlashOn) {
+                actionFlash(view);
+            }
             byte[] bitmapByteArray = CameraHelper.takePicture(cameraPreview);
 
             Intent intent = new Intent(MainActivity.this, ConfirmActivity.class);
             intent.putExtra("image",bitmapByteArray);
-            if(isFlashOn) {
-                actionFlash(view);
-            }
+
             startActivity(intent);
 
         });
