@@ -43,6 +43,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
+            <ImageButton
+                android:id="@+id/button_flash"
+                android:src="@drawable/ic_flash_on"
+                android:layout_width="200px"
+                android:layout_height="200px"
+                android:layout_alignParentLeft="true"
+                android:background="@drawable/ic_circle_background"
+                android:onClick="actionFlash"
+                />
+
+
 
         </FrameLayout>
 

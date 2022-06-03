@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/PROJEKT-PI/math-vision/MathVisionAndroid/app/src/main/res/drawable/ic_circle_background.xml" value="0.2875" />
+        <entry key="..\:/PROJEKT-PI/math-vision/MathVisionAndroid/app/src/main/res/drawable/ic_flash_off.xml" value="0.2875" />
+        <entry key="..\:/PROJEKT-PI/math-vision/MathVisionAndroid/app/src/main/res/drawable/ic_flash_on.xml" value="0.2875" />
         <entry key="..\:/PROJEKT-PI/math-vision/MathVisionAndroid/app/src/main/res/layout/activity_confirm.xml" value="0.2" />
         <entry key="..\:/PROJEKT-PI/math-vision/MathVisionAndroid/app/src/main/res/layout/activity_main.xml" value="0.19635416666666666" />
         <entry key="..\:/ProjektPI/math-vision/MathVisionAndroid/app/src/main/res/layout/activity_confirm.xml" value="0.25416666666666665" />
