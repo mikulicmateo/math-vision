@@ -4,16 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.SurfaceTexture;
-import android.graphics.drawable.Drawable;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CaptureRequest;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
@@ -72,27 +69,29 @@ public class MainActivity extends AppCompatActivity {
         assert cameraPreview != null;
         cameraPreview.setSurfaceTextureListener(textureListener);
 
-        button_flash = (ImageButton)findViewById(R.id.button_flash);
+        button_flash = (ImageButton) findViewById(R.id.button_flash);
         btnCapture = findViewById(R.id.buttonTakePicture);
         // On click Take picture and start new activity
         btnCapture.setOnClickListener(view -> {
 
-            if(cameraDevice == null)
+            if (cameraDevice == null)
                 return;
 
-            if(isFlashOn) {
+            if (isFlashOn) {
                 actionFlash(view);
             }
-            byte[] bitmapByteArray = CameraHelper.takePicture(cameraPreview);
 
+            byte[][] byteArrayImages = new byte[3][];
+            for (int i = 0; i < 3; i++) {
+                byteArrayImages[i] = CameraHelper.takePicture(cameraPreview);
+            }
             Intent intent = new Intent(MainActivity.this, ConfirmActivity.class);
-            intent.putExtra("image",bitmapByteArray);
+            intent.putExtra("image", byteArrayImages);
 
             startActivity(intent);
 
         });
     }
-
 
 
     public static Context getAppContext() {
@@ -101,17 +100,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void createCameraPreview() {
         //Method for showing camera view
-        try{
+        try {
             SurfaceTexture texture = cameraPreview.getSurfaceTexture();
-            assert  texture != null;
-            texture.setDefaultBufferSize(CameraHelper.getImageDimension().getWidth(),CameraHelper.getImageDimension().getHeight());
+            assert texture != null;
+            texture.setDefaultBufferSize(CameraHelper.getImageDimension().getWidth(), CameraHelper.getImageDimension().getHeight());
             Surface surface = new Surface(texture);
             captureRequestBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
             captureRequestBuilder.addTarget(surface);
             cameraDevice.createCaptureSession(Collections.singletonList(surface), new CameraCaptureSession.StateCallback() {
                 @Override
                 public void onConfigured(@NonNull CameraCaptureSession cameraCaptureSession) {
-                    if(cameraDevice == null)
+                    if (cameraDevice == null)
                         return;
                     cameraCaptureSessions = cameraCaptureSession;
                     updatePreview();
@@ -121,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {
                     Toast.makeText(MainActivity.this, "Changed", Toast.LENGTH_SHORT).show();
                 }
-            },null);
+            }, null);
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
@@ -129,11 +128,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void updatePreview() {
         //Method for rendering camera lens output
-        if(cameraDevice == null)
+        if (cameraDevice == null)
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
-            captureRequestBuilder.set(CaptureRequest.CONTROL_MODE,CaptureRequest.CONTROL_MODE_AUTO);
-        try{
-            cameraCaptureSessions.setRepeatingRequest(captureRequestBuilder.build(),null, new Handler());
+        captureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CaptureRequest.CONTROL_MODE_AUTO);
+        try {
+            cameraCaptureSessions.setRepeatingRequest(captureRequestBuilder.build(), null, new Handler());
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
@@ -147,11 +146,12 @@ public class MainActivity extends AppCompatActivity {
         // Checks textureView and opens camera
         @Override
         public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
-         openCameraAndInitializeImageDimension();
+            openCameraAndInitializeImageDimension();
         }
 
         @Override
-        public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int i, int i1) {}
+        public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int i, int i1) {
+        }
 
         @Override
         public boolean onSurfaceTextureDestroyed(SurfaceTexture surfaceTexture) {
@@ -159,7 +159,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {}
+        public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {
+        }
     };
 
     @Override
@@ -175,15 +176,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void actionFlash(View view) {
-        try{
-            if(isFlashOn){
+        try {
+            if (isFlashOn) {
                 button_flash.setImageResource(R.drawable.ic_flash_on);
                 cameraCaptureSessions.stopRepeating();
                 captureRequestBuilder.set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_OFF);
                 updatePreview();
                 isFlashOn = false;
-            }
-            else{
+            } else {
                 button_flash.setImageResource(R.drawable.ic_flash_off);
                 cameraCaptureSessions.stopRepeating();
                 captureRequestBuilder.set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_TORCH);

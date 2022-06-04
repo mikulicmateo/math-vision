@@ -21,16 +21,16 @@ public class EquationActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         String equation = bundle.getString("textEquation");
 
-        if(getResources().getString(R.string.mode).equals("night")){
+        if (getResources().getString(R.string.mode).equals("night")) {
             mvTest.setBackgroundColor("#121212");
             mvTest.setTextColor("white");
         }
-        mvTest.setText("Equation $$"+equation+"$$ solution:"+CalculationHelper.getAnswer(equation));
+        mvTest.setText("Equation $$" + equation + "$$ solution:" + CalculationHelper.getAnswer(equation));
     }
-    public void again(View v)
-    {
+
+    public void again(View v) {
         //changes the content view to MainClass activity
-        Intent intent = new Intent(EquationActivity.this,MainActivity.class);
+        Intent intent = new Intent(EquationActivity.this, MainActivity.class);
         EquationActivity.this.startActivity(intent);
     }
 

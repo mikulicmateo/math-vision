@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,12 +17,15 @@ import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class ConfirmActivity extends AppCompatActivity {
 
-    private Bitmap bitmap;
     private EditText equationText;
     private String equation;
+    private List<Bitmap> bitmapList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,33 +36,34 @@ public class ConfirmActivity extends AppCompatActivity {
         ImageView showImage = findViewById(R.id.imageView);
 
         try {
-            byte[] byteArray = getIntent().getByteArrayExtra("image");
-            bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-
-            showImage.setImageBitmap(bitmap);
-        }
-        catch(NullPointerException e){
-                    onCreate(savedInstanceState);
-        }
-        catch (Exception e) {
+            byte[][] byteArray;
+            byteArray = (byte[][]) getIntent().getSerializableExtra("image");
+            bitmapList = new ArrayList<>();
+            for (byte[] byteImage : byteArray) {
+                bitmapList.add(BitmapFactory.decodeByteArray(byteImage, 0, byteImage.length));
+            }
+            showImage.setImageBitmap(bitmapList.get(0));
+        } catch (NullPointerException e) {
+            onCreate(savedInstanceState);
+        } catch (Exception e) {
             equationText.append(e.toString());
         }
     }
 
-    public void clickRetry(View view)
-    {
+    public void clickRetry(View view) {
         // Returns to first activity
         Intent intent = new Intent(ConfirmActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
+
     private final BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
         public void onManagerConnected(int status) {
             switch (status) {
                 case LoaderCallbackInterface.SUCCESS: {
                     Log.i("OpenCV", "OpenCV loaded successfully!");
-                    equation=EquationMaker.imageToEquation(bitmap);
+                    equation = EquationMaker.imageToEquation(bitmapList);
                     equationText.setText(equation);
                 }
                 break;
@@ -71,12 +74,14 @@ public class ConfirmActivity extends AppCompatActivity {
             }
         }
     };
-    public void clickConfirm(View v)
-    {
-        Intent intent = new Intent(ConfirmActivity.this,EquationActivity.class);
+
+
+    public void clickConfirm(View v) {
+        Intent intent = new Intent(ConfirmActivity.this, EquationActivity.class);
         intent.putExtra("textEquation", equationText.getText().toString());
         ConfirmActivity.this.startActivity(intent);
     }
+
     @Override
     public void onResume() {
         super.onResume();

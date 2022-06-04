@@ -21,8 +21,8 @@ public class CameraHelper {
     private static final int REQUEST_CAMERA_PERMISSION = 200;
     private static Size imageDimension;
 
-    public static void openCamera(CameraManager manager, Context context, Activity activity, CameraDevice.StateCallback stateCallback){
-        try{
+    public static void openCamera(CameraManager manager, Context context, Activity activity, CameraDevice.StateCallback stateCallback) {
+        try {
             String cameraId = manager.getCameraIdList()[0];
             CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraId);
             StreamConfigurationMap map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
@@ -30,26 +30,25 @@ public class CameraHelper {
             imageDimension = map.getOutputSizes(SurfaceTexture.class)[0];
 
             //Check realtime permission if run higher API 23
-            if(ActivityCompat.checkSelfPermission(context, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-            {
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(activity, new String[]{
                         Manifest.permission.CAMERA,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
-                },REQUEST_CAMERA_PERMISSION);
+                }, REQUEST_CAMERA_PERMISSION);
             }
-            manager.openCamera(cameraId,stateCallback,null);
+            manager.openCamera(cameraId, stateCallback, null);
 
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
     }
 
-    public static byte[] takePicture(TextureView cameraPreview){
+    public static byte[] takePicture(TextureView cameraPreview) {
         Bitmap bitmap;
         bitmap = cameraPreview.getBitmap();
         bitmap = ImageManipulationHelper.resizeImage(bitmap);
 
-        return ImageManipulationHelper.convertBitmapToByteArray(bitmap) ;
+        return ImageManipulationHelper.convertBitmapToByteArray(bitmap);
     }
 
     public static Size getImageDimension() {

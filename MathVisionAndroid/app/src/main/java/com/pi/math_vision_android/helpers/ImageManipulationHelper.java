@@ -9,16 +9,16 @@ public class ImageManipulationHelper {
 
     //Cropping image to newWidth and newHeight to given percentage
     public static Bitmap resizeImage(Bitmap bitmap, float newWidth, float newHeight) {
-         int NewWidth= Math.round(bitmap.getWidth()*(newWidth/100));
-         int NewHeight=Math.round(bitmap.getHeight()*(newHeight/100));
+        int NewWidth = Math.round(bitmap.getWidth() * (newWidth / 100));
+        int NewHeight = Math.round(bitmap.getHeight() * (newHeight / 100));
         return Bitmap.createScaledBitmap(bitmap, NewWidth, NewHeight, true);
     }
 
     public static Bitmap resizeImage(Bitmap bitmap) {
         //Cropping image to view bounding box
 
-        bitmap = Bitmap.createBitmap(bitmap,(int) Math.round(bitmap.getWidth()*0.05),(int)Math.round(bitmap.getHeight()*0.43),
-                (int)Math.round(bitmap.getWidth()*0.9),(int)Math.round(bitmap.getHeight()*0.27));
+        bitmap = Bitmap.createBitmap(bitmap, (int) Math.round(bitmap.getWidth() * 0.05), (int) Math.round(bitmap.getHeight() * 0.43),
+                (int) Math.round(bitmap.getWidth() * 0.9), (int) Math.round(bitmap.getHeight() * 0.27));
         return bitmap;
     }
 
@@ -47,7 +47,7 @@ public class ImageManipulationHelper {
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 
-    public static byte[] convertBitmapToByteArray(Bitmap bitmap){
+    public static byte[] convertBitmapToByteArray(Bitmap bitmap) {
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);

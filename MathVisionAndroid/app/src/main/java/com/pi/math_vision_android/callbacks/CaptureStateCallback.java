@@ -12,15 +12,15 @@ public class CaptureStateCallback extends CameraCaptureSession.StateCallback {
     private CameraCaptureSession.CaptureCallback captureListener;
     private CaptureRequest.Builder captureBuilder;
 
-    public CaptureStateCallback(CameraCaptureSession.CaptureCallback captureCallback, CaptureRequest.Builder captureBuilder){
+    public CaptureStateCallback(CameraCaptureSession.CaptureCallback captureCallback, CaptureRequest.Builder captureBuilder) {
         this.captureListener = captureCallback;
         this.captureBuilder = captureBuilder;
     }
 
     @Override
     public void onConfigured(@NonNull CameraCaptureSession cameraCaptureSession) {
-        try{
-            cameraCaptureSession.capture(captureBuilder.build(),captureListener,new Handler());
+        try {
+            cameraCaptureSession.capture(captureBuilder.build(), captureListener, new Handler());
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }

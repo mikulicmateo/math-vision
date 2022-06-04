@@ -10,30 +10,29 @@ import org.matheclipse.parser.client.math.MathException;
 public class CalculationHelper {
 
     public static String getAnswer(String equation) {
-    //creating the answer for the equation for the given string
+        //creating the answer for the equation for the given string
 
-        EvalUtilities util = new EvalUtilities(false,true);
-        try{
+        EvalUtilities util = new EvalUtilities(false, true);
+        try {
             IExpr result = util.evaluate(equation);
-            return"$$"+ stringToJqmath(result.toString())+"$$</br>";
-        }
-        catch (SyntaxError e){
-            Log.e("err",e.getMessage());
+            return "$$" + stringToJqmath(result.toString()) + "$$</br>";
+        } catch (SyntaxError e) {
+            Log.e("err", e.getMessage());
             return "Syntax error";
-        }
-        catch (MathException e){
+        } catch (MathException e) {
             return "Math Error";
         }
 
     }
-    public static String stringToJqmath(String equation)  {
+
+    public static String stringToJqmath(String equation) {
         //Changing SymJa syntax to jqMath
-        String FirstSwap=equation.replaceAll("Sqrt","√");
-        String secondSwap=FirstSwap.replaceAll("Pow","^");
-        String thirdSwap=secondSwap.replaceAll("\\{", "" );
-        String fourthSwap=thirdSwap.replaceAll("\\}", "" );
-        String fifth=fourthSwap.replaceAll("=", "" );
-        return fifth.replaceAll(",","\\$\\$\\$\\$");
+        String FirstSwap = equation.replaceAll("Sqrt", "√");
+        String secondSwap = FirstSwap.replaceAll("Pow", "^");
+        String thirdSwap = secondSwap.replaceAll("\\{", "");
+        String fourthSwap = thirdSwap.replaceAll("\\}", "");
+        String fifth = fourthSwap.replaceAll("=", "");
+        return fifth.replaceAll(",", "\\$\\$\\$\\$");
 
     }
 
