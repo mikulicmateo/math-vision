@@ -1,4 +1,3 @@
-Complexity metrics,Sat, 4 Jun 2022 20:47:17 CEST
 Method,CogC,ev(G),iv(G),v(G)
 com.pi.math_vision_android.ConfirmActivity.clickConfirm(View),0,1,1,1
 com.pi.math_vision_android.ConfirmActivity.clickRetry(View),0,1,1,1
