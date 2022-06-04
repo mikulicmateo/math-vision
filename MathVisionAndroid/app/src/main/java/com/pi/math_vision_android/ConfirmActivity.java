@@ -39,26 +39,24 @@ public class ConfirmActivity extends AppCompatActivity {
             byte[][] byteArray;
             byteArray = (byte[][]) getIntent().getSerializableExtra("image");
             bitmapList = new ArrayList<>();
-            for(byte[] byteImage : byteArray){
+            for (byte[] byteImage : byteArray) {
                 bitmapList.add(BitmapFactory.decodeByteArray(byteImage, 0, byteImage.length));
             }
             showImage.setImageBitmap(bitmapList.get(0));
-        }
-        catch(NullPointerException e){
-                    onCreate(savedInstanceState);
-        }
-        catch (Exception e) {
+        } catch (NullPointerException e) {
+            onCreate(savedInstanceState);
+        } catch (Exception e) {
             equationText.append(e.toString());
         }
     }
 
-    public void clickRetry(View view)
-    {
+    public void clickRetry(View view) {
         // Returns to first activity
         Intent intent = new Intent(ConfirmActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
+
     private final BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
         public void onManagerConnected(int status) {
@@ -77,9 +75,9 @@ public class ConfirmActivity extends AppCompatActivity {
         }
     };
 
-    public void clickConfirm(View v)
-    {
-        Intent intent = new Intent(ConfirmActivity.this,EquationActivity.class);
+
+    public void clickConfirm(View v) {
+        Intent intent = new Intent(ConfirmActivity.this, EquationActivity.class);
         intent.putExtra("textEquation", equationText.getText().toString());
         ConfirmActivity.this.startActivity(intent);
     }

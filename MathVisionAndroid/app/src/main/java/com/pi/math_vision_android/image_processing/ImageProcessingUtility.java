@@ -23,7 +23,7 @@ import java.util.List;
 public class ImageProcessingUtility {
 
 
-    public static List<Bitmap> preprocessImage(List<Bitmap> wholeImageBitmapList){
+    public static List<Bitmap> preprocessImage(List<Bitmap> wholeImageBitmapList) {
         List<Mat> images = new ArrayList<>();
 
 
@@ -36,7 +36,7 @@ public class ImageProcessingUtility {
         return getIndividualSymbols(augmentedImage);
     }
 
-    private static Mat readImageToGrayScale(Bitmap bitmap){
+    private static Mat readImageToGrayScale(Bitmap bitmap) {
         Mat mat = new Mat();
         Utils.bitmapToMat(bitmap, mat);
 
@@ -52,12 +52,12 @@ public class ImageProcessingUtility {
         Mat hierarchy = new Mat();
         Imgproc.findContours(image, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE); //find contours
 
-        for (Rect rect : getBoundingRectangles(contours)){
+        for (Rect rect : getBoundingRectangles(contours)) {
             Mat imageToResize = new Mat(image, rect);
             Mat blankImage = Mat.zeros(new Size(100, 100), CvType.CV_8U);
 
-            while (imageToResize.height() > 100 || imageToResize.width() > 100){
-                Imgproc.resize(imageToResize, imageToResize, new Size(0,0), 0.5, 0.5, Imgproc.INTER_AREA);
+            while (imageToResize.height() > 100 || imageToResize.width() > 100) {
+                Imgproc.resize(imageToResize, imageToResize, new Size(0, 0), 0.5, 0.5, Imgproc.INTER_AREA);
             }
 
             int x = 50 - (imageToResize.width() / 2);
@@ -67,7 +67,7 @@ public class ImageProcessingUtility {
             Core.bitwise_not(blankImage, blankImage);
 
             Bitmap bmp;
-            Mat tmp = new Mat (blankImage.rows(), blankImage.cols(), CvType.CV_8UC1, new Scalar(4));
+            Mat tmp = new Mat(blankImage.rows(), blankImage.cols(), CvType.CV_8UC1, new Scalar(4));
             Imgproc.cvtColor(blankImage, tmp, Imgproc.COLOR_GRAY2RGBA, 4);
             bmp = Bitmap.createBitmap(tmp.cols(), tmp.rows(), Bitmap.Config.ARGB_8888);
             Utils.matToBitmap(tmp, bmp);
@@ -78,16 +78,16 @@ public class ImageProcessingUtility {
         return symbols;
     }
 
-    private static Mat augmentImage(Mat mat){
-        Imgproc.blur(mat,mat, new Size(5,5));
+    private static Mat augmentImage(Mat mat) {
+        Imgproc.blur(mat, mat, new Size(5, 5));
         Imgproc.threshold(mat, mat, 125, 250, Imgproc.THRESH_BINARY_INV); // thresholding
-        Mat rectKernel = Imgproc.getStructuringElement(Imgproc.CV_SHAPE_RECT, new Size(3,3));
-        Imgproc.dilate(mat, mat, rectKernel, new Point(-1,-1), 3); //dilation
+        Mat rectKernel = Imgproc.getStructuringElement(Imgproc.CV_SHAPE_RECT, new Size(3, 3));
+        Imgproc.dilate(mat, mat, rectKernel, new Point(-1, -1), 3); //dilation
 
         return mat;
     }
 
-    private static List<Rect> getBoundingRectangles(List<MatOfPoint> contours){
+    private static List<Rect> getBoundingRectangles(List<MatOfPoint> contours) {
         contours.sort(new MatOfPointComparator());
         List<Rect> boundingRects = new ArrayList<>();
 
@@ -97,13 +97,13 @@ public class ImageProcessingUtility {
         return boundingRects;
     }
 
-    public static ByteBuffer getByteBufferFromBitmap(Bitmap bitmap){
+    public static ByteBuffer getByteBufferFromBitmap(Bitmap bitmap) {
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
         ByteBuffer mImgData = ByteBuffer.allocateDirect(4 * width * height);
 
         mImgData.order(ByteOrder.nativeOrder());
-        int[] pixels = new int[width*height];
+        int[] pixels = new int[width * height];
         bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
         for (int pixel : pixels) {
             mImgData.putFloat((float) Color.red(pixel));
