@@ -10,7 +10,7 @@ import java.util.List;
 
 public class EquationMaker {
 
-    public static String imageToEquation(Bitmap wholeImage){
+    public static String imageToEquation(List<Bitmap> wholeImageBitmapList){
         List<Bitmap> symbolImages = ImageProcessingUtility.preprocessImage(wholeImage);
         StringBuilder equationBuilder = new StringBuilder();
 

@@ -4,16 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.SurfaceTexture;
-import android.graphics.drawable.Drawable;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CaptureRequest;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
@@ -83,10 +80,13 @@ public class MainActivity extends AppCompatActivity {
             if(isFlashOn) {
                 actionFlash(view);
             }
-            byte[] bitmapByteArray = CameraHelper.takePicture(cameraPreview);
 
+            byte[][] byteArrayImages = new byte[3][];
+            for(int i = 0; i<3; i++) {
+                byteArrayImages[i] = CameraHelper.takePicture(cameraPreview);
+            }
             Intent intent = new Intent(MainActivity.this, ConfirmActivity.class);
-            intent.putExtra("image",bitmapByteArray);
+            intent.putExtra("image",byteArrayImages);
 
             startActivity(intent);
 
