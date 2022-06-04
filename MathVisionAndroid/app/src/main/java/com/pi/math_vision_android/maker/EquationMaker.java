@@ -11,7 +11,7 @@ import java.util.List;
 public class EquationMaker {
 
     public static String imageToEquation(List<Bitmap> wholeImageBitmapList){
-        List<Bitmap> symbolImages = ImageProcessingUtility.preprocessImage(wholeImage);
+        List<Bitmap> symbolImages = ImageProcessingUtility.preprocessImage(wholeImageBitmapList);
         StringBuilder equationBuilder = new StringBuilder();
 
         for(Bitmap symbolImage : symbolImages)

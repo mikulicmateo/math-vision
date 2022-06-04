@@ -13,6 +13,7 @@ import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
+import org.opencv.photo.Photo;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -22,10 +23,18 @@ import java.util.List;
 public class ImageProcessingUtility {
 
 
-    public static List<Bitmap> preprocessImage(Bitmap bitmap){
-        Mat image = readImage(bitmap);
-        image = augmentImage(image);
-        return getIndividualSymbols(image);
+    public static List<Bitmap> preprocessImage(List<Bitmap> wholeImageBitmapList){
+        List<Mat> images = new ArrayList<Mat>();
+
+        wholeImageBitmapList.forEach(bitmap -> {
+            images.add(readImage(bitmap));
+        });
+
+        Mat averagedImage = new Mat();
+        Photo.fastNlMeansDenoisingColoredMulti(images, averagedImage, 0, 3);
+
+        Mat augmentedImage = augmentImage(averagedImage);
+        return getIndividualSymbols(augmentedImage);
     }
 
     private static Mat readImage(Bitmap bitmap){
