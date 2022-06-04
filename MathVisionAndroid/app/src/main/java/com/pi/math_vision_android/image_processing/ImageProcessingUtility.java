@@ -24,22 +24,23 @@ public class ImageProcessingUtility {
 
 
     public static List<Bitmap> preprocessImage(List<Bitmap> wholeImageBitmapList){
-        List<Mat> images = new ArrayList<Mat>();
+        List<Mat> images = new ArrayList<>();
 
-        wholeImageBitmapList.forEach(bitmap -> {
-            images.add(readImage(bitmap));
-        });
+
+        wholeImageBitmapList.forEach(bitmap -> images.add(readImageToGrayScale(bitmap)));
 
         Mat averagedImage = new Mat();
-        Photo.fastNlMeansDenoisingColoredMulti(images, averagedImage, 0, 3);
+        Photo.fastNlMeansDenoisingMulti(images, averagedImage, 1, 3);
 
         Mat augmentedImage = augmentImage(averagedImage);
         return getIndividualSymbols(augmentedImage);
     }
 
-    private static Mat readImage(Bitmap bitmap){
+    private static Mat readImageToGrayScale(Bitmap bitmap){
         Mat mat = new Mat();
         Utils.bitmapToMat(bitmap, mat);
+
+        Imgproc.cvtColor(mat, mat, Imgproc.COLOR_BGR2GRAY);
 
         return mat;
     }
@@ -65,7 +66,7 @@ public class ImageProcessingUtility {
             imageToResize.copyTo(blankImage.colRange(x, x + imageToResize.width()).rowRange(y, y + imageToResize.height()));
             Core.bitwise_not(blankImage, blankImage);
 
-            Bitmap bmp = null;
+            Bitmap bmp;
             Mat tmp = new Mat (blankImage.rows(), blankImage.cols(), CvType.CV_8UC1, new Scalar(4));
             Imgproc.cvtColor(blankImage, tmp, Imgproc.COLOR_GRAY2RGBA, 4);
             bmp = Bitmap.createBitmap(tmp.cols(), tmp.rows(), Bitmap.Config.ARGB_8888);
@@ -78,7 +79,6 @@ public class ImageProcessingUtility {
     }
 
     private static Mat augmentImage(Mat mat){
-        Imgproc.cvtColor(mat, mat, Imgproc.COLOR_BGR2GRAY); //grayscale
         Imgproc.blur(mat,mat, new Size(5,5));
         Imgproc.threshold(mat, mat, 125, 250, Imgproc.THRESH_BINARY_INV); // thresholding
         Mat rectKernel = Imgproc.getStructuringElement(Imgproc.CV_SHAPE_RECT, new Size(3,3));

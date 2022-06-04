@@ -65,7 +65,7 @@ public class ConfirmActivity extends AppCompatActivity {
             switch (status) {
                 case LoaderCallbackInterface.SUCCESS: {
                     Log.i("OpenCV", "OpenCV loaded successfully!");
-                    equation=EquationMaker.imageToEquation(bitmapList);
+                    equation = EquationMaker.imageToEquation(bitmapList);
                     equationText.setText(equation);
                 }
                 break;
@@ -76,12 +76,14 @@ public class ConfirmActivity extends AppCompatActivity {
             }
         }
     };
+
     public void clickConfirm(View v)
     {
         Intent intent = new Intent(ConfirmActivity.this,EquationActivity.class);
         intent.putExtra("textEquation", equationText.getText().toString());
         ConfirmActivity.this.startActivity(intent);
     }
+
     @Override
     public void onResume() {
         super.onResume();
