@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import com.pi.math_vision_android.MainActivity;
 import com.pi.math_vision_android.constants.SymbolRecognitionModelClassConstants;
 import com.pi.math_vision_android.image_processing.ImageProcessingUtility;
-import com.pi.math_vision_android.ml.NumberRecognizerV1;
+import com.pi.math_vision_android.ml.MathRecognizerV2;
 
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
@@ -15,9 +15,9 @@ import java.nio.ByteBuffer;
 
 public class SymbolRecognitionModelInterface {
 
-    public static char getPrediction(Bitmap img) {
+    public static String getPrediction(Bitmap img) {
         try {
-            NumberRecognizerV1 model = NumberRecognizerV1.newInstance(MainActivity.getAppContext());
+            MathRecognizerV2 model = MathRecognizerV2.newInstance(MainActivity.getAppContext());
 
             // Creates inputs for reference.
             TensorBuffer inputFeature = TensorBuffer.createFixedSize(new int[]{1, 100, 100, 1}, DataType.FLOAT32);
@@ -27,10 +27,10 @@ public class SymbolRecognitionModelInterface {
             inputFeature.loadBuffer(byteBuffer, new int[]{1, 100, 100, 1});
 
             // Runs model inference and gets result.
-            NumberRecognizerV1.Outputs outputs = model.process(inputFeature);
+            MathRecognizerV2.Outputs outputs = model.process(inputFeature);
             TensorBuffer outputFeature = outputs.getOutputFeature0AsTensorBuffer();
 
-            char symbol = getPredictedSymbol(outputFeature.getFloatArray());
+            String symbol = getPredictedSymbol(outputFeature.getFloatArray());
             // Releases model resources if no longer used.
             model.close();
 
@@ -40,7 +40,7 @@ public class SymbolRecognitionModelInterface {
         }
     }
 
-    private static char getPredictedSymbol(float[] outputFeature) {
+    private static String getPredictedSymbol(float[] outputFeature) {
 
         float max = 0;
         int classIndex = 0;
@@ -54,7 +54,7 @@ public class SymbolRecognitionModelInterface {
         return mapCharacter(classIndex);
     }
 
-    private static char mapCharacter(int classIndex) {
+    private static String mapCharacter(int classIndex) {
         return SymbolRecognitionModelClassConstants.CLASSES_CHARS[classIndex];
     }
 }
