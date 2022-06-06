@@ -20,7 +20,7 @@ public class EquationActivity extends AppCompatActivity {
         MathView mvTest = (MathView) findViewById(R.id.MathView);
         Bundle bundle = getIntent().getExtras();
         String equation = bundle.getString("textEquation");
-
+        equation = equation.replaceAll("=", "==");
         if (getResources().getString(R.string.mode).equals("night")) {
             mvTest.setBackgroundColor("#121212");
             mvTest.setTextColor("white");

@@ -25,14 +25,14 @@ public class CalculationHelper {
 
     }
 
-    public static String stringToJqmath(String equation) {
+    private static String stringToJqmath(String equation) {
         //Changing SymJa syntax to jqMath
         String FirstSwap = equation.replaceAll("Sqrt", "√");
         String secondSwap = FirstSwap.replaceAll("Pow", "^");
         String thirdSwap = secondSwap.replaceAll("\\{", "");
         String fourthSwap = thirdSwap.replaceAll("\\}", "");
-        String fifth = fourthSwap.replaceAll("=", "");
-        return fifth.replaceAll(",", "\\$\\$\\$\\$");
+        fourthSwap= fourthSwap.replaceAll("==","=");
+        return fourthSwap.replaceAll(",", "\\$\\$\\$\\$");
 
     }
 
