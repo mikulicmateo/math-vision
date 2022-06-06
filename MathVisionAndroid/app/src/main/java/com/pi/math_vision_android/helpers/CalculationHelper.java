@@ -31,8 +31,8 @@ public class CalculationHelper {
         String secondSwap = FirstSwap.replaceAll("Pow", "^");
         String thirdSwap = secondSwap.replaceAll("\\{", "");
         String fourthSwap = thirdSwap.replaceAll("\\}", "");
-        String fifth = fourthSwap.replaceAll("=", "");
-        return fifth.replaceAll(",", "\\$\\$\\$\\$");
+        fourthSwap= fourthSwap.replaceAll("==","=");
+        return fourthSwap.replaceAll(",", "\\$\\$\\$\\$");
 
     }
 
