@@ -42,7 +42,7 @@ public class ConfirmActivity extends AppCompatActivity {
             }
             showImage.setImageBitmap(bitmapList.get(4));
         } catch (NullPointerException e) {
-            //onCreate(savedInstanceState);
+            Log.e("Error:", e.getMessage());
         } catch (Exception e) {
             equationText.append(e.toString());
         }

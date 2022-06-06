@@ -7,7 +7,6 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.jstarczewski.pc.mathview.src.MathView;
-
 import com.pi.math_vision_android.containers.ImageContainer;
 import com.pi.math_vision_android.helpers.CalculationHelper;
 

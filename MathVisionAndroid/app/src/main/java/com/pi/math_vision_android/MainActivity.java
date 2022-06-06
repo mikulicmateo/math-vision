@@ -11,7 +11,6 @@ import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CaptureRequest;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
@@ -24,9 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.pi.math_vision_android.containers.ImageContainer;
 import com.pi.math_vision_android.helpers.CameraHelper;
-import com.pi.math_vision_android.maker.EquationMaker;
 
-import java.util.Base64;
 import java.util.Collections;
 import java.util.Objects;
 

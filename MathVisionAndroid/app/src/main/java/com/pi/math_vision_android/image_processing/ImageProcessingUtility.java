@@ -2,7 +2,6 @@ package com.pi.math_vision_android.image_processing;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.util.Log;
 
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
