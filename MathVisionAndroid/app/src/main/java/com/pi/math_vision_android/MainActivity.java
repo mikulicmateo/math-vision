@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.pi.math_vision_android.containers.ImageContainer;
 import com.pi.math_vision_android.helpers.CameraHelper;
 
 import java.util.Collections;
@@ -71,25 +72,25 @@ public class MainActivity extends AppCompatActivity {
 
         button_flash = (ImageButton) findViewById(R.id.button_flash);
         btnCapture = findViewById(R.id.buttonTakePicture);
+
         // On click Take picture and start new activity
         btnCapture.setOnClickListener(view -> {
 
             if (cameraDevice == null)
                 return;
 
+            for(int i = 0; i < 5; i++){
+                ImageContainer.ImageByteArray.add(CameraHelper.takePicture(cameraPreview));
+            }
+
             if (isFlashOn) {
                 actionFlash(view);
             }
 
-            byte[][] byteArrayImages = new byte[3][];
-            for (int i = 0; i < 3; i++) {
-                byteArrayImages[i] = CameraHelper.takePicture(cameraPreview);
-            }
             Intent intent = new Intent(MainActivity.this, ConfirmActivity.class);
-            intent.putExtra("image", byteArrayImages);
 
             startActivity(intent);
-
+            finish();
         });
     }
 
@@ -194,4 +195,5 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
 }
