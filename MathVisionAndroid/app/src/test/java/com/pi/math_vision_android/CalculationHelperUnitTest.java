@@ -59,8 +59,13 @@ public class CalculationHelperUnitTest {
     }
 
     @Test
+    public void testFactorialOK(){
+        assertEquals(writeExpected("6"), CalculationHelper.getAnswer("3!"));
+    }
+
+    @Test
     public void testSimpleEquation(){
-        assertEquals(writeExpected("x=2"), CalculationHelper.getAnswer("34+x=36"));
+        assertEquals(writeExpected("x=2"), CalculationHelper.getAnswer("34+x==36"));
     }
 
     @Test
