@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.pi.math_vision_android.containers.ImageContainer;
 import com.pi.math_vision_android.maker.EquationMaker;
 
 import org.opencv.android.BaseLoaderCallback;
@@ -34,17 +35,14 @@ public class ConfirmActivity extends AppCompatActivity {
         setContentView(R.layout.activity_confirm);
         equationText = findViewById(R.id.editTextEquation);
         ImageView showImage = findViewById(R.id.imageView);
-
         try {
-            byte[][] byteArray;
-            byteArray = (byte[][]) getIntent().getSerializableExtra("image");
             bitmapList = new ArrayList<>();
-            for (byte[] byteImage : byteArray) {
+            for (byte[] byteImage : ImageContainer.ImageByteArray) {
                 bitmapList.add(BitmapFactory.decodeByteArray(byteImage, 0, byteImage.length));
             }
-            showImage.setImageBitmap(bitmapList.get(0));
+            showImage.setImageBitmap(bitmapList.get(4));
         } catch (NullPointerException e) {
-            onCreate(savedInstanceState);
+            //onCreate(savedInstanceState);
         } catch (Exception e) {
             equationText.append(e.toString());
         }
@@ -54,7 +52,9 @@ public class ConfirmActivity extends AppCompatActivity {
         // Returns to first activity
         Intent intent = new Intent(ConfirmActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        ImageContainer.ImageByteArray.clear();
         startActivity(intent);
+        finish();
     }
 
     private final BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {

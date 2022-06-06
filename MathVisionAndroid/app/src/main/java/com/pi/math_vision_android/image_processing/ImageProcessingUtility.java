@@ -2,6 +2,7 @@ package com.pi.math_vision_android.image_processing;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.util.Log;
 
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
@@ -23,14 +24,13 @@ import java.util.List;
 public class ImageProcessingUtility {
 
 
-    public static List<Bitmap> preprocessImage(List<Bitmap> wholeImageBitmapList) {
+    public static List<Bitmap> preprocessImage(List<Bitmap> wholeImageBitmapList) throws RuntimeException {
         List<Mat> images = new ArrayList<>();
-
 
         wholeImageBitmapList.forEach(bitmap -> images.add(readImageToGrayScale(bitmap)));
 
         Mat averagedImage = new Mat();
-        Photo.fastNlMeansDenoisingMulti(images, averagedImage, 1, 3);
+        Photo.fastNlMeansDenoisingMulti(images, averagedImage, 2, 5);
 
         Mat augmentedImage = augmentImage(averagedImage);
         return getIndividualSymbols(augmentedImage);
@@ -45,12 +45,15 @@ public class ImageProcessingUtility {
         return mat;
     }
 
-    private static List<Bitmap> getIndividualSymbols(Mat image) {
+    private static List<Bitmap> getIndividualSymbols(Mat image) throws RuntimeException {
         List<Bitmap> symbols = new ArrayList<>();
 
         List<MatOfPoint> contours = new ArrayList<>();
         Mat hierarchy = new Mat();
         Imgproc.findContours(image, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE); //find contours
+
+        if (contours.size() >= 20)
+            throw new RuntimeException("Error: Too many symbols recognised");
 
         for (Rect rect : getBoundingRectangles(contours)) {
             Mat imageToResize = new Mat(image, rect);
@@ -81,8 +84,10 @@ public class ImageProcessingUtility {
     private static Mat augmentImage(Mat mat) {
         Imgproc.blur(mat, mat, new Size(5, 5));
         Imgproc.threshold(mat, mat, 125, 250, Imgproc.THRESH_BINARY_INV); // thresholding
-        Mat rectKernel = Imgproc.getStructuringElement(Imgproc.CV_SHAPE_RECT, new Size(3, 3));
-        Imgproc.dilate(mat, mat, rectKernel, new Point(-1, -1), 3); //dilation
+        Mat rectKernelErosion = Imgproc.getStructuringElement(Imgproc.CV_SHAPE_RECT, new Size(2, 2));
+        Mat rectKernelDilation = Imgproc.getStructuringElement(Imgproc.CV_SHAPE_RECT, new Size(3, 3));
+        Imgproc.erode(mat, mat, rectKernelErosion, new Point(-1, -1), 2); //eroding
+        Imgproc.dilate(mat, mat, rectKernelDilation, new Point(-1, -1), 5); //dilation
 
         return mat;
     }

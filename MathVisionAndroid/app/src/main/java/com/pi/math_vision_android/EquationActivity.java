@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.jstarczewski.pc.mathview.src.MathView;
 
+import com.pi.math_vision_android.containers.ImageContainer;
 import com.pi.math_vision_android.helpers.CalculationHelper;
 
 public class EquationActivity extends AppCompatActivity {
@@ -31,7 +32,9 @@ public class EquationActivity extends AppCompatActivity {
     public void again(View v) {
         //changes the content view to MainClass activity
         Intent intent = new Intent(EquationActivity.this, MainActivity.class);
+        ImageContainer.ImageByteArray.clear();
         EquationActivity.this.startActivity(intent);
+        finish();
     }
 
 }
