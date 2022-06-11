@@ -131,8 +131,10 @@ public class MainActivity extends AppCompatActivity {
         //Method for rendering camera lens output
         if (cameraDevice == null)
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
-        captureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CaptureRequest.CONTROL_MODE_AUTO);
+        captureRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_AUTO);
         try {
+            captureRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
+            captureRequestBuilder.set(CaptureRequest.CONTROL_AE_LOCK, true);
             cameraCaptureSessions.setRepeatingRequest(captureRequestBuilder.build(), null, new Handler());
         } catch (CameraAccessException e) {
             e.printStackTrace();
