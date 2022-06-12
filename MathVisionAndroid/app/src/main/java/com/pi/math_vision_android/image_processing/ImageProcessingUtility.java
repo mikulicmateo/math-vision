@@ -86,7 +86,7 @@ public class ImageProcessingUtility {
         Mat rectKernelErosion = Imgproc.getStructuringElement(Imgproc.CV_SHAPE_RECT, new Size(2, 2));
         Mat rectKernelDilation = Imgproc.getStructuringElement(Imgproc.CV_SHAPE_RECT, new Size(3, 3));
         Imgproc.erode(mat, mat, rectKernelErosion, new Point(-1, -1), 2); //eroding
-        Imgproc.dilate(mat, mat, rectKernelDilation, new Point(-1, -1), 5); //dilation
+        Imgproc.dilate(mat, mat, rectKernelDilation, new Point(-1, -1), 4); //dilation
 
         return mat;
     }
