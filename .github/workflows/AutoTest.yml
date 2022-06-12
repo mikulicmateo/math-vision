@@ -1,9 +1,6 @@
 name: AutoTest
 
-on:
-  push:
-    paths: 
-      - MathVisionAndroid/**
+on: [push]
   
 jobs:
   build:
@@ -21,3 +18,4 @@ jobs:
       uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
       with:
         arguments: -b ci.gradle package
+        build-root-directory: MathVisionAndroid/**
