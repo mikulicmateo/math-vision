@@ -1,7 +1,10 @@
 name: AutoTest
 
-on: [push]
-
+on:
+  push:
+    paths: 
+      - MathVisionAndroid/**
+  
 jobs:
   build:
     runs-on: ubuntu-latest
