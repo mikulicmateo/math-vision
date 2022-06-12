@@ -25,4 +25,4 @@ jobs:
       # uses: Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9
       uses: Ilshidur/action-discord@0.3.2
       with: 
-        args: 'gospodine {{ GITHUB_ACTION }}'
+        args: 'Gospodine!\n ${{ github.action }}'
