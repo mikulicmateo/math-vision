@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="1"
+        android:background="@color/blackTransparent">
+
+
+        <FrameLayout
+            android:id="@+id/cameraLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+
+
+            >
+
+
+            <TextureView
+                android:id="@+id/cameraPreview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <ImageButton
+                android:id="@+id/button_flash"
+                android:src="@drawable/ic_flash_on"
+                android:layout_width="200px"
+                android:layout_height="200px"
+                android:layout_alignParentLeft="true"
+                android:background="@drawable/ic_circle_background"
+                android:onClick="actionFlash"
+                />
+
+
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/bottomLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/buttonTakePicture"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="30dp"
+                android:text="Take picture"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/mutno"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/StartX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/EndX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/StartY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.35" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/endlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/EndY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.55" />
+    <TextView
+        android:id="@+id/Overlay"
+        android:layout_width="0dp"
+        android:layout_height="0sp"
+        android:layout_gravity="center"
+        app:layout_constraintEnd_toStartOf="@+id/EndX"
+        app:layout_constraintTop_toBottomOf="@+id/StartY"
+        app:layout_constraintBottom_toBottomOf="@id/EndY"
+        app:layout_constraintStart_toEndOf="@+id/StartX" />
+
+    <TextView
+        android:id="@+id/lft"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:background="@color/blackTransparent"
+
+        app:layout_constraintEnd_toEndOf="@id/StartX"
+        app:layout_constraintStart_toStartOf="@id/mutno"
+        app:layout_constraintTop_toTopOf="@id/mutno"
+        app:layout_constraintBottom_toTopOf="@id/endlay"/>
+
+    <TextView
+        android:id="@+id/rite"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:background="@color/blackTransparent"
+
+        app:layout_constraintEnd_toEndOf="@id/mutno"
+        app:layout_constraintStart_toStartOf="@id/EndX"
+        app:layout_constraintTop_toTopOf="@id/mutno"
+        app:layout_constraintBottom_toTopOf="@id/endlay"/>
+
+    <TextView
+        android:id="@+id/topic"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:background="@color/blackTransparent"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/rite"
+        app:layout_constraintStart_toEndOf="@id/EndX"
+        app:layout_constraintStart_toStartOf="@id/StartX"
+app:layout_constraintBottom_toTopOf="@id/endlay"
+        app:layout_constraintTop_toTopOf="@id/EndY"/>
+    <TextView
+        android:id="@+id/botic"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:background="@color/blackTransparent"
+
+        app:layout_constraintStart_toStartOf="@id/StartX"
+        app:layout_constraintEnd_toEndOf="@id/EndX"
+        app:layout_constraintTop_toTopOf="@id/mutno"
+        app:layout_constraintBottom_toBottomOf="@id/StartY"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

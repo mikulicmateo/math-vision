@@ -1,0 +1,26 @@
+name: discord-action
+
+on: 
+  issues:
+    types:
+      - opened
+      - closed
+  push:
+  label:
+    types:
+      - created
+  pull_request:
+    types:
+      - opened
+      - closed
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Actions for Discord
+      env: 
+        DISCORD_WEBHOOK: "https://discord.com/api/webhooks/985644824357130240/qCAkgAKLq1nYNVWA4cvme7dbnl16ju5wU9MNgR7ZLOBroJ_AJb5bd3FWYCZDcT7RvTTc"
+      # You may pin to the exact commit or the version.
+      # uses: Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9
+      uses: Ilshidur/action-discord@0.3.2

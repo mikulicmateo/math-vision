@@ -1,0 +1,16 @@
+Class,OCavg,OCmax,WMC
+com.pi.math_vision_android.ConfirmActivity,1.60,3,8
+com.pi.math_vision_android.EquationActivity,1.50,2,3
+com.pi.math_vision_android.ExampleInstrumentedTest,1.00,1,1
+com.pi.math_vision_android.ExampleUnitTest,1.00,1,1
+com.pi.math_vision_android.MainActivity,1.50,4,24
+com.pi.math_vision_android.callbacks.CaptureStateCallback,1.00,1,3
+com.pi.math_vision_android.constants.OrientationConstants,n/a,n/a,0
+com.pi.math_vision_android.constants.SymbolRecognitionModelClassConstants,n/a,n/a,0
+com.pi.math_vision_android.helpers.CalculationHelper,1.00,1,2
+com.pi.math_vision_android.helpers.CameraHelper,1.33,2,4
+com.pi.math_vision_android.helpers.ImageManipulationHelper,1.80,5,9
+com.pi.math_vision_android.image_processing.ImageProcessingUtility,1.67,3,10
+com.pi.math_vision_android.image_processing.MatOfPointComparator,1.00,1,1
+com.pi.math_vision_android.maker.EquationMaker,3.00,4,6
+com.pi.math_vision_android.recognition_model.SymbolRecognitionModelInterface,1.67,3,5

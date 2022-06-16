@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ConfirmActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="1">
+
+        <FrameLayout
+            android:id="@+id/cameraLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/bottomLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.7"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_weight="0.5"
+                >
+
+                <EditText
+                    android:id="@+id/editTextEquation"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textSize="20sp"
+                    android:inputType="text"
+                    android:text="Equation"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:orientation="horizontal">
+
+
+                    <Button
+                        android:id="@+id/buttonRetry"
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="15dp"
+                        android:layout_weight="1"
+                        android:onClick="clickRetry"
+                        android:text="Retry" />
+
+                <Button
+                    android:id="@+id/buttonConfirm"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="15dp"
+                    android:layout_weight="1"
+                    android:onClick="clickConfirm"
+                    android:text="Confirm" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
